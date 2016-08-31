@@ -26,7 +26,7 @@ struct TABLETOPGAME_API FWeaponSheet
 	EWeaponType WeoponType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-	uint8 Streangth;
+	uint8 Strength;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	uint8 ArmorPiercing;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)

@@ -139,6 +139,9 @@
     <ClInclude Include="..\..\Source\TableTopGame\Public\Player\TTPlayerController.h">
       <Filter>Source\TableTopGame\Public\Player</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\TableTopGame\Public\TTGameMode.h">
+      <Filter>Source\TableTopGame\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTWeapon.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TableTopGame\Private\Player\TTPlayerController.cpp">
       <Filter>Source\TableTopGame\Private\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TableTopGame\Private\TTGameMode.cpp">
+      <Filter>Source\TableTopGame\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

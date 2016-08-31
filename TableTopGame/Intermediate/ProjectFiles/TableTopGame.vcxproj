@@ -414,9 +414,11 @@
     <None Include="..\..\Config\DefaultGame.ini" />
     <None Include="..\..\Source\TableTopGame\TableTopGame.Build.cs" />
     <ClCompile Include="..\..\Source\TableTopGame\Private\Player\TTPlayerController.cpp" />
+    <ClCompile Include="..\..\Source\TableTopGame\Private\TTGameMode.cpp" />
     <ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTWeapon.cpp" />
     <ClCompile Include="..\..\Source\TableTopGame\TableTopGame.cpp" />
     <ClInclude Include="..\..\Source\TableTopGame\Public\Player\TTPlayerController.h" />
+    <ClInclude Include="..\..\Source\TableTopGame\Public\TTGameMode.h" />
     <ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTWeapon.h" />
     <ClInclude Include="..\..\Source\TableTopGame\TableTopGame.h" />
     <ClCompile Include="..\..\Source\TableTopGame\TableTopGameGameMode.cpp" />

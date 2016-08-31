@@ -19,6 +19,7 @@ class TABLETOPGAME_API ARTSPlayerController : public APlayerController
 public:
 	ARTSPlayerController(const FObjectInitializer& ObjectInitializer);
 
+	
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;

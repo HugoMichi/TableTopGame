@@ -12,7 +12,9 @@ UENUM(BlueprintType)
 enum class EAttributeModifierType : uint8
 {
 	AMT_Multiply 	UMETA(DisplayName = "*"),
+	AMT_Divide 	UMETA(DisplayName = "/"),
 	AMT_Add  	UMETA(DisplayName = "+"),
+	AMT_Subtract  	UMETA(DisplayName = "-"),
 	AMT_Override 	UMETA(DisplayName = "override")
 };
 
@@ -20,13 +22,22 @@ USTRUCT(BlueprintType)
 struct TABLETOPGAME_API FAttributeModifier
 {
 	GENERATED_BODY()
-
-
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		EAttributeModifierType ModifierType;
+		FAttributeModifier() {
+		this->ModifierType = EAttributeModifierType::AMT_Add;
+		this->BaseValue = 0;
+		this->ModifierName = TEXT("StandardModifier");
+	}
+	FAttributeModifier(EAttributeModifierType ModifierType, uint8 BaseValue, FName ModifierName) {
+		this->ModifierType = ModifierType;
+		this->BaseValue = BaseValue;
+		this->ModifierName = ModifierName;
+	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		uint8 BaseValue;
+	EAttributeModifierType ModifierType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	uint8 BaseValue;
 
 	FName ModifierName;
 	bool operator<(const FAttributeModifier &B) {
