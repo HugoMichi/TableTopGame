@@ -23,7 +23,7 @@ struct TABLETOPGAME_API FWeaponSheet
 {
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-	TEnumAsByte<EWeaponType> WeoponType;
+	EWeaponType WeoponType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	uint8 Streangth;
@@ -57,7 +57,7 @@ public:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-	UStaticMeshComponent* MeshComponent;
+	class UStaticMeshComponent* MeshComponent;
 
 	TArray<FWeaponSheet> WeaponCharSheets;
 	FWeaponSheet* CurrentWeaponSheet;

@@ -23,7 +23,7 @@ struct TABLETOPGAME_API FAttributeModifier
 
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		TEnumAsByte<EAttributeModifierType> ModifierType;
+		EAttributeModifierType ModifierType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 		uint8 BaseValue;
@@ -40,6 +40,9 @@ struct TABLETOPGAME_API FAttributeModifier
 	}
 
 };
+
+/** Broadcasts whenever the layer changes */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributeChangedEvent);
 
 USTRUCT(BlueprintType)
 struct TABLETOPGAME_API FAttribute
@@ -63,6 +66,12 @@ struct TABLETOPGAME_API FAttribute
 		FAttribute(BaseValue);
 	}
 
+
+
+/** Broadcasts whenever the layer changes */
+	UPROPERTY(BlueprintAssignable,Category = ModelCharacteristics)
+	FAttributeChangedEvent ChangedEvent;
+	FAttributeChangedEvent& OnChanged() { return ChangedEvent; }
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 		uint8 BaseValue;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
@@ -118,16 +127,19 @@ struct TABLETOPGAME_API FAttribute
 
 		}
 		FinalValue = FMath::Clamp(FinalValue, ClampValueMin, ClampValueMax);
+
 	}
 
 	void AddModifier(FAttributeModifier mod) {
 		Modifiers.Add(mod);
 		CalculateFinalValue();
+		ChangedEvent.Broadcast();
 	}
 
 	int32 RemoveModifier(FAttributeModifier mod) {
 		int32 res = Modifiers.Remove(mod);
 		CalculateFinalValue();
+		ChangedEvent.Broadcast();
 		return res;
 	}
 

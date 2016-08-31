@@ -136,10 +136,16 @@
     <ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTWeapon.h">
       <Filter>Source\TableTopGame\Public\Units</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\TableTopGame\Public\Player\TTPlayerController.h">
+      <Filter>Source\TableTopGame\Public\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTWeapon.cpp">
       <Filter>Source\TableTopGame\Private\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TableTopGame\Private\Player\TTPlayerController.cpp">
+      <Filter>Source\TableTopGame\Private\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
