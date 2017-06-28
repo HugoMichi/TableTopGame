@@ -1,157 +1,154 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <None Include="..\..\TableTopGame.uproject" />
-    <Filter Include="Source">
-      <UniqueIdentifier>{255BF33B-AF84-4CA7-84AE-714053699B1C}</UniqueIdentifier>
-    </Filter>
-    <None Include="..\..\Source\TableTopGame.Target.cs">
-      <Filter>Source</Filter>
-    </None>
-    <None Include="..\..\Source\TableTopGameEditor.Target.cs">
-      <Filter>Source</Filter>
-    </None>
-    <Filter Include="Config">
-      <UniqueIdentifier>{62B84B61-4489-4766-9D61-50F7FCCDC82C}</UniqueIdentifier>
-    </Filter>
-    <None Include="..\..\Config\DefaultEditor.ini">
-      <Filter>Config</Filter>
-    </None>
-    <None Include="..\..\Config\DefaultEngine.ini">
-      <Filter>Config</Filter>
-    </None>
-    <None Include="..\..\Config\DefaultGame.ini">
-      <Filter>Config</Filter>
-    </None>
-    <Filter Include="Source\TableTopGame">
-      <UniqueIdentifier>{9D37F905-08F7-4FBD-8BC6-EEEB98676C94}</UniqueIdentifier>
-    </Filter>
-    <None Include="..\..\Source\TableTopGame\TableTopGame.Build.cs">
-      <Filter>Source\TableTopGame</Filter>
-    </None>
-    <ClCompile Include="..\..\Source\TableTopGame\TableTopGame.cpp">
-      <Filter>Source\TableTopGame</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TableTopGame\TableTopGame.h">
-      <Filter>Source\TableTopGame</Filter>
-    </ClInclude>
-    <ClCompile Include="..\..\Source\TableTopGame\TableTopGameGameMode.cpp">
-      <Filter>Source\TableTopGame</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\TableTopGame\TableTopGameGameMode.h">
-      <Filter>Source\TableTopGame</Filter>
-    </ClInclude>
-    <Filter Include="Source\TableTopGame\Private">
-      <UniqueIdentifier>{6A907F24-75A0-4FBE-84A9-66C40EB118C5}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\RTSGameMode.cpp">
-      <Filter>Source\TableTopGame\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\StrategySelectionInterface.cpp">
-      <Filter>Source\TableTopGame\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\TableTopGameState.cpp">
-      <Filter>Source\TableTopGame\Private</Filter>
-    </ClCompile>
-    <Filter Include="Source\TableTopGame\Private\Player">
-      <UniqueIdentifier>{BBDDA6A1-07E0-4EB0-AA4A-46709F415822}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Player\RTSPlayerController.cpp">
-      <Filter>Source\TableTopGame\Private\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Player\RTSPlayerPawn.cpp">
-      <Filter>Source\TableTopGame\Private\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Player\TableTopPlayerState.cpp">
-      <Filter>Source\TableTopGame\Private\Player</Filter>
-    </ClCompile>
-    <Filter Include="Source\TableTopGame\Private\UI">
-      <UniqueIdentifier>{094D3743-2982-4D8E-A527-4000E7B7EE02}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TableTopHUD.cpp">
-      <Filter>Source\TableTopGame\Private\UI</Filter>
-    </ClCompile>
-    <Filter Include="Source\TableTopGame\Private\Units">
-      <UniqueIdentifier>{6C230EC1-2E50-4619-9115-497D4D8A92EA}</UniqueIdentifier>
-    </Filter>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Units\AIModelController.cpp">
-      <Filter>Source\TableTopGame\Private\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Units\ModelCharacter.cpp">
-      <Filter>Source\TableTopGame\Private\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Units\RTSCharacter.cpp">
-      <Filter>Source\TableTopGame\Private\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTAttribute.cpp">
-      <Filter>Source\TableTopGame\Private\Units</Filter>
-    </ClCompile>
-    <Filter Include="Source\TableTopGame\Public">
-      <UniqueIdentifier>{994312A1-BFAF-4C8C-8FC7-0E11BF07B5BA}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\RTSGameMode.h">
-      <Filter>Source\TableTopGame\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\StrategySelectionInterface.h">
-      <Filter>Source\TableTopGame\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\TableTopGameState.h">
-      <Filter>Source\TableTopGame\Public</Filter>
-    </ClInclude>
-    <Filter Include="Source\TableTopGame\Public\Player">
-      <UniqueIdentifier>{78561E0B-FD69-4DC1-B5A1-6521A31F6A88}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Player\RTSPlayerController.h">
-      <Filter>Source\TableTopGame\Public\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Player\RTSPlayerPawn.h">
-      <Filter>Source\TableTopGame\Public\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Player\TableTopPlayerState.h">
-      <Filter>Source\TableTopGame\Public\Player</Filter>
-    </ClInclude>
-    <Filter Include="Source\TableTopGame\Public\UI">
-      <UniqueIdentifier>{1850CF9C-EB36-4A1B-BDD8-F73BB98EEAA3}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TableTopHUD.h">
-      <Filter>Source\TableTopGame\Public\UI</Filter>
-    </ClInclude>
-    <Filter Include="Source\TableTopGame\Public\Units">
-      <UniqueIdentifier>{2B6F22F8-DB65-4F0F-8641-F8D84ED05266}</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Units\AIModelController.h">
-      <Filter>Source\TableTopGame\Public\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Units\ModelCharacter.h">
-      <Filter>Source\TableTopGame\Public\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Units\RTSCharacter.h">
-      <Filter>Source\TableTopGame\Public\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTAttribute.h">
-      <Filter>Source\TableTopGame\Public\Units</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTWeapon.h">
-      <Filter>Source\TableTopGame\Public\Units</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\Player\TTPlayerController.h">
-      <Filter>Source\TableTopGame\Public\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\TableTopGame\Public\TTGameMode.h">
-      <Filter>Source\TableTopGame\Public</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTWeapon.cpp">
-      <Filter>Source\TableTopGame\Private\Units</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\Player\TTPlayerController.cpp">
-      <Filter>Source\TableTopGame\Private\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\TableTopGame\Private\TTGameMode.cpp">
-      <Filter>Source\TableTopGame\Private</Filter>
-    </ClCompile>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\TableTopGame.uproject" />
+		<Filter Include="Source">
+			<UniqueIdentifier>{DE7AB48A-7033-4A3A-94B9-F965DBEC0096}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\TableTopGame.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<None Include="..\..\Source\TableTopGameEditor.Target.cs">
+			<Filter>Source</Filter>
+		</None >
+		<Filter Include="Config">
+			<UniqueIdentifier>{4CBAA314-3331-42B3-A904-6EA3F0456E80}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Config\DefaultEditor.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultEngine.ini">
+			<Filter>Config</Filter>
+		</None >
+		<None Include="..\..\Config\DefaultGame.ini">
+			<Filter>Config</Filter>
+		</None >
+		<Filter Include="Source\TableTopGame">
+			<UniqueIdentifier>{644EF0EF-0027-4230-B960-BFC74A8A51BF}</UniqueIdentifier>
+		</Filter>
+		<None Include="..\..\Source\TableTopGame\TableTopGame.Build.cs">
+			<Filter>Source\TableTopGame</Filter>
+		</None >
+		<ClCompile Include="..\..\Source\TableTopGame\TableTopGame.cpp">
+			<Filter>Source\TableTopGame</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\TableTopGame\TableTopGame.h">
+			<Filter>Source\TableTopGame</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\TableTopGame\TableTopGameGameMode.cpp">
+			<Filter>Source\TableTopGame</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\TableTopGame\TableTopGameGameMode.h">
+			<Filter>Source\TableTopGame</Filter>
+		</ClInclude >
+		<Filter Include="Source\TableTopGame\Private">
+			<UniqueIdentifier>{4F1EA387-8836-43E0-BB0E-44C501E6457D}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\TableTopGame\Private\RTSGameMode.cpp">
+			<Filter>Source\TableTopGame\Private</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\StrategySelectionInterface.cpp">
+			<Filter>Source\TableTopGame\Private</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\TableTopGameState.cpp">
+			<Filter>Source\TableTopGame\Private</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\TTGameMode.cpp">
+			<Filter>Source\TableTopGame\Private</Filter>
+		</ClCompile >
+		<Filter Include="Source\TableTopGame\Private\Player">
+			<UniqueIdentifier>{505D0209-69E7-46A6-A544-B87357D1B2B2}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Player\RTSPlayerController.cpp">
+			<Filter>Source\TableTopGame\Private\Player</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Player\RTSPlayerPawn.cpp">
+			<Filter>Source\TableTopGame\Private\Player</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Player\TableTopPlayerState.cpp">
+			<Filter>Source\TableTopGame\Private\Player</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Player\TTPlayerController.cpp">
+			<Filter>Source\TableTopGame\Private\Player</Filter>
+		</ClCompile >
+		<Filter Include="Source\TableTopGame\Private\UI">
+			<UniqueIdentifier>{65B9D94B-68D4-48D8-A2E4-42A8F8B6A171}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\TableTopGame\Private\UI\TableTopHUD.cpp">
+			<Filter>Source\TableTopGame\Private\UI</Filter>
+		</ClCompile >
+		<Filter Include="Source\TableTopGame\Private\Units">
+			<UniqueIdentifier>{99CB74E8-A5B1-4039-882F-7D1976974F25}</UniqueIdentifier>
+		</Filter>
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Units\AIModelController.cpp">
+			<Filter>Source\TableTopGame\Private\Units</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Units\ModelCharacter.cpp">
+			<Filter>Source\TableTopGame\Private\Units</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Units\RTSCharacter.cpp">
+			<Filter>Source\TableTopGame\Private\Units</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTAttribute.cpp">
+			<Filter>Source\TableTopGame\Private\Units</Filter>
+		</ClCompile >
+		<ClCompile Include="..\..\Source\TableTopGame\Private\Units\TTWeapon.cpp">
+			<Filter>Source\TableTopGame\Private\Units</Filter>
+		</ClCompile >
+		<Filter Include="Source\TableTopGame\Public">
+			<UniqueIdentifier>{6B4936E3-F1F1-4792-B225-00C55C561CFF}</UniqueIdentifier>
+		</Filter>
+		<ClInclude Include="..\..\Source\TableTopGame\Public\RTSGameMode.h">
+			<Filter>Source\TableTopGame\Public</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\StrategySelectionInterface.h">
+			<Filter>Source\TableTopGame\Public</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\TableTopGameState.h">
+			<Filter>Source\TableTopGame\Public</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\TTGameMode.h">
+			<Filter>Source\TableTopGame\Public</Filter>
+		</ClInclude >
+		<Filter Include="Source\TableTopGame\Public\Player">
+			<UniqueIdentifier>{EF60BD06-500D-4781-BE61-AA06CA57A21B}</UniqueIdentifier>
+		</Filter>
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Player\RTSPlayerController.h">
+			<Filter>Source\TableTopGame\Public\Player</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Player\RTSPlayerPawn.h">
+			<Filter>Source\TableTopGame\Public\Player</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Player\TableTopPlayerState.h">
+			<Filter>Source\TableTopGame\Public\Player</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Player\TTPlayerController.h">
+			<Filter>Source\TableTopGame\Public\Player</Filter>
+		</ClInclude >
+		<Filter Include="Source\TableTopGame\Public\UI">
+			<UniqueIdentifier>{0ED9D778-2940-438A-92F8-4B7749494ACB}</UniqueIdentifier>
+		</Filter>
+		<ClInclude Include="..\..\Source\TableTopGame\Public\UI\TableTopHUD.h">
+			<Filter>Source\TableTopGame\Public\UI</Filter>
+		</ClInclude >
+		<Filter Include="Source\TableTopGame\Public\Units">
+			<UniqueIdentifier>{4BF462D0-7329-4334-85AD-CA04063C91FE}</UniqueIdentifier>
+		</Filter>
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Units\AIModelController.h">
+			<Filter>Source\TableTopGame\Public\Units</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Units\ModelCharacter.h">
+			<Filter>Source\TableTopGame\Public\Units</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Units\RTSCharacter.h">
+			<Filter>Source\TableTopGame\Public\Units</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTAttribute.h">
+			<Filter>Source\TableTopGame\Public\Units</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\TableTopGame\Public\Units\TTWeapon.h">
+			<Filter>Source\TableTopGame\Public\Units</Filter>
+		</ClInclude >
+	</ItemGroup>
 </Project>
