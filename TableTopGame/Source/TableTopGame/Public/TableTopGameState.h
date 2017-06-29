@@ -13,11 +13,13 @@ class TABLETOPGAME_API ATableTopGameState : public AGameState
 {
 	GENERATED_BODY()
 
-private:
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	uint8 CurrentTurn;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	uint8 MaxTurns;
 
+	UFUNCTION()
 	void EndTurn();
 
 

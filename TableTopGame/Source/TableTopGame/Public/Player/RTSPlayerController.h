@@ -28,6 +28,9 @@ protected:
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 	// End PlayerController interface
+	//TestFunction
+	void OnTest();
+
 
 	/** Navigate player to the current mouse cursor location. */
 	void MoveToMouseCursor();

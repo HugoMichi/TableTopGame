@@ -14,7 +14,8 @@ class TABLETOPGAME_API ATTGameMode : public ARTSGameMode
 {
 	GENERATED_BODY()
 public:
-		void BroadcastDiceRoll(APlayerController* RollingPlayer,FName ActionName, TArray<uint8> DiceResults, uint8 ValueNeeded, bool smallerIsBetter);
+	ATTGameMode();
+	void BroadcastDiceRoll(APlayerController* RollingPlayer,FName ActionName, TArray<uint8> DiceResults, uint8 ValueNeeded, bool smallerIsBetter);
 	
 	
 };

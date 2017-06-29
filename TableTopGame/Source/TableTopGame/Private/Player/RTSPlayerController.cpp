@@ -3,6 +3,7 @@
 #include "TableTopGame.h"
 #include "Public/Player/RTSPlayerController.h"
 #include "AI/Navigation/NavigationSystem.h"
+#include "Public/Player/TableTopPlayerState.h"
 
 ARTSPlayerController::ARTSPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -30,13 +31,14 @@ void ARTSPlayerController::SetupInputComponent()
 	InputComponent->BindAction("Select", IE_Pressed, this, &ARTSPlayerController::OnSetSelectedUnderCursorPressed);
 	InputComponent->BindAction("Select", IE_Released, this, &ARTSPlayerController::OnSetSelectedUnderCursorReleased);
 
+	InputComponent->BindAction("TestPlayerState", EInputEvent::IE_Pressed, this, &ARTSPlayerController::OnTest);
 	/*reference needed !!!!!
 	set ConsumeInput = false Because MouseInput is needed in the Pawn*/
 	FInputAxisBinding& mouseMoveX = InputComponent->BindAxis("MouseMoveX", this, &ARTSPlayerController::OnMouseMove);
 	mouseMoveX.bConsumeInput = false;
 	FInputAxisBinding& mouseMoveY = InputComponent->BindAxis("MouseMoveY", this, &ARTSPlayerController::OnMouseMove);
 	mouseMoveY.bConsumeInput = false;
-
+	
 	//InputComponent->BindAction("SetDestination", IE_Pressed, this, &ARTSPlayerController::OnSetDestinationPressed);
 	//InputComponent->BindAction("SetDestination", IE_Released, this, &ARTSPlayerController::OnSetDestinationReleased);
 	//Super::GetPawn();
@@ -45,6 +47,13 @@ void ARTSPlayerController::SetupInputComponent()
 	// support touch devices 
 	//InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ARTSPlayerController::MoveToTouchLocation);
 	//InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ARTSPlayerController::MoveToTouchLocation);
+}
+void ARTSPlayerController::OnTest() 
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Test Function Called"));
+	ATableTopPlayerState* ATTPlayerState = Cast<ATableTopPlayerState>(this->PlayerState);
+	if (ATTPlayerState)
+		ATTPlayerState->EndCurrentPhase();
 }
 
 void ARTSPlayerController::MoveToMouseCursor()
@@ -76,11 +85,11 @@ void ARTSPlayerController::MoveToTouchLocation(const ETouchIndex::Type FingerInd
 
 void ARTSPlayerController::SetNewMoveDestination(const FVector DestLocation)
 {
-	APawn* const Pawn = GetPawn();
-	if (Pawn)
+	APawn* const APawn = GetPawn();
+	if (APawn)
 	{
 		UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
-		float const Distance = FVector::Dist(DestLocation, Pawn->GetActorLocation());
+		float const Distance = FVector::Dist(DestLocation, APawn->GetActorLocation());
 
 		// We need to issue move command only if far enough in order for walk animation to play correctly
 		if (NavSys && (Distance > 120.0f))

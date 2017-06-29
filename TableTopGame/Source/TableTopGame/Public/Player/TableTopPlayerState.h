@@ -3,7 +3,8 @@
 #pragma once
 
 #include "GameFramework/PlayerState.h"
-//#include "Public/Units/ModelCharacter.h"
+#include "Public/Units/ModelCharacter.h"
+//#include "Public/Player/EPlayerEnums.h"
 #include "TableTopPlayerState.generated.h"
 
 /**
@@ -12,21 +13,43 @@
 class ModelCharacter;
 
 UENUM(BlueprintType)
-enum class  EPlayerPhase: uint8
+enum class  EPlayerPhase : uint8
 {
-PP_DeploymentPhase  UMETA(DisplayName = "Deployment Phase"),
-PP_MovementPhase 	UMETA(DisplayName = "Movement Phase"),
-PP_PsychicPhase UMETA(DisplayName = "Psychic Phase"),
-PP_ShootingPhase 	UMETA(DisplayName = "Shooting Phase"),
-PP_AssaultPhase  UMETA(DisplayName = "Assault Phase")
+	PP_DeploymentPhase = 1 UMETA(DisplayName = "Deployment Phase"),
+	PP_MovementPhase = 2	UMETA(DisplayName = "Movement Phase"),
+	PP_PsychicPhase	= 4	UMETA(DisplayName = "Psychic Phase"),
+	PP_ShootingPhase = 7	UMETA(DisplayName = "Shooting Phase"),
+	PP_AssaultPhase	 = 9 	UMETA(DisplayName = "Assault Phase")
+	
 };
+/*
+
+EPlayerPhase& operator++(EPlayerPhase& cur) {
+	switch (cur)
+	{
+	case EPlayerPhase::PP_AssaultPhase:
+		return cur = EPlayerPhase::PP_MovementPhase;
+	default:
+		return cur =  EPlayerPhase::PP_PsychicPhase;
+		break;
+	}
+};*/
+
+
 
 UCLASS()
 class TABLETOPGAME_API ATableTopPlayerState : public APlayerState
 {
 	GENERATED_BODY()
-
-		TEnumAsByte<EPlayerPhase> CurrentPhase;
-		TArray<ModelCharacter*> UnitList;
+public:
+	ATableTopPlayerState(const FObjectInitializer& ObjectInitializer);
+	UFUNCTION()
+	void EndCurrentPhase();
+	UPROPERTY()
+	EPlayerPhase CurrentPhase;
+	//TEnumAsByte<EPlayerPhase> CurrentPhase;
+	
+	//UPROPERTY()
+	TArray<ModelCharacter*> UnitList;
 
 };

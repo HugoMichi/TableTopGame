@@ -60,21 +60,25 @@ struct TABLETOPGAME_API FAttribute
 {
 	GENERATED_BODY()
 
-		FAttribute() {
-		ClampValueMax = 10;
-		ClampValueMin = 0;
-		BaseValue = 0;
-		CalculateFinalValue();
+	FAttribute() {
+		FAttribute(0);
+		//BaseValue = 0;
+		//CalculateFinalValue();
 	}
-	FAttribute(uint8 baseValue) {
-		ClampValueMax = 10;
+	FAttribute(uint8 baseValue) {		
+	
+		FAttribute(baseValue,TArray<FAttributeModifier>());
+		//this->BaseValue = baseValue;
+		//CalculateFinalValue();
+	}
+	FAttribute(uint8 baseValue, TArray<FAttributeModifier> modifiers) {	
 		ClampValueMin = 0;
+		ClampValueMax = 10;
+		//FAttribute(baseValue);
 		this->BaseValue = baseValue;
-		CalculateFinalValue();
-	}
-	FAttribute(uint8 baseValue, TArray<FAttributeModifier> modifiers) {
 		this->Modifiers = modifiers;
-		FAttribute(BaseValue);
+		CalculateFinalValue();
+		
 	}
 
 

@@ -4,6 +4,8 @@
 #include "TTWeapon.h"
 #include "Public/Player/TTPlayerController.h"
 #include "Public/TTGameMode.h"
+#include <EngineGlobals.h>
+#include <Runtime/Engine/Classes/Engine/Engine.h>
 #include "Public/Units/ModelCharacter.h"
 
 
@@ -33,7 +35,7 @@ void AModelCharacter::Tick( float DeltaTime )
 }
 
 // Called to bind functionality to input
-void AModelCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void AModelCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
@@ -41,6 +43,7 @@ void AModelCharacter::SetupPlayerInputComponent(class UInputComponent* InputComp
 
 bool AModelCharacter::MoveTo(const FVector Location)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TODO: Function AModelCharacter::MoveTo not implemented"));
 	return false;
 }
 
@@ -48,6 +51,7 @@ bool AModelCharacter::MoveTo(const FVector Location)
 /*ShootingPhase*/
 void AModelCharacter::ShowShootingRange()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TODO: Function AModelCharacter::ShowShootingRange() not implemented"));
 }
 
 void AModelCharacter::ShootAtTarget(AModelCharacter * Target)
@@ -79,6 +83,7 @@ bool AModelCharacter::SelectWeapon(uint8 WeaponArrayPos)
 
 bool AModelCharacter::HasLineOfSightTo(AModelCharacter * Target)
 {	
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TODO: Function AModelCharacter::HasLineOfSightTo not implemented"));
 	//TODO:: Do Linetrace from Head to enemy unit ....
 	return false;
 }
@@ -86,6 +91,7 @@ bool AModelCharacter::HasLineOfSightTo(AModelCharacter * Target)
 bool AModelCharacter::IsInWeaponRangeTo(AModelCharacter * Target)
 {	
 	//TODO:: RangeCheck 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("TODO: Function AModelCharacter::IsInWeaponRangeTo not implemented"));
 	return false;
 }
 
