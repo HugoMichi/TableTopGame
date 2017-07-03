@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/HUD.h"
+#include "TTMainUIWidget.h"
 #include "TableTopHUD.generated.h"
 
 /**
@@ -14,6 +15,8 @@ class TABLETOPGAME_API ATableTopHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	ATableTopHUD(const FObjectInitializer& ObjectInitializer);
+
 	// Begin HUD interface
 	virtual void DrawHUD() override;
 	// End HUD interface
@@ -23,5 +26,13 @@ public:
 	void SetSelectionRect(FVector2D startPoint, FVector2D endPoint);
 	FBox2D SelectionRect;
 private:
+	/*InventoryWidget Blueprint reference*/
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UTTMainUIWidget> MainUIWidgetBP;
+	UTTMainUIWidget* MainUIWidget;
 
+	//class UClass * MainUIWidgetClass;
+	//class UTTMainUIWidget * MainUIWidget;
+
+	virtual void BeginPlay() override;
 };

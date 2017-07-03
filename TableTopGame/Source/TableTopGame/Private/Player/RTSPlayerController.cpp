@@ -154,16 +154,13 @@ void ARTSPlayerController::OnSetSelectedUnderCursorReleased()
 			selectable->Execute_OnSelectionGained(actor);
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Selected!!!!!"));
+	int selLength = SelectedObjects.Num();
+	FString foo = FString::FromInt(selLength);
+	UE_LOG(LogTemp, Warning, TEXT("Selected!!!!! %d" ), selLength);
 
-	for (AActor * actor : SelectedObjects) {
+	OnSelectionChanged.Broadcast();
+	/*for (AActor * actor : SelectedObjects) {
 		//UE_LOG(LogTemp, Warning, TEXT("SelectedName: %s"),*actor->GetName());
-	}
-	/*AActor* selected = GetSelectableActorUnderCursor();
-	if (selected) {
-	if (!bAddToCurrentSelection)
-	SelectedObjects.Empty();
-	SelectedObjects.Add(selected);
 	}*/
 	UE_LOG(LogTemp, Warning, TEXT("EndSelected!!!!!"));
 }
@@ -176,7 +173,7 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 	OutActors.Empty();
 
 	//Create Selection Rectangle from Points
-	FBox2D SelectionRectangle(0);
+	FBox2D SelectionRectangle(EForceInit::ForceInitToZero);
 
 	//This method ensures that an appropriate rectangle is generated, 
 	//		no matter what the coordinates of first and second point actually are.
@@ -214,7 +211,7 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 		const FVector BoxExtents = EachActorBounds.GetExtent();
 
 		// Build 2D bounding box of actor in screen space
-		FBox2D ActorBox2D(0);
+		FBox2D ActorBox2D(EForceInit::ForceInitToZero);
 		for (uint8 BoundsPointItr = 0; BoundsPointItr < 8; BoundsPointItr++)
 		{
 			// Project vert into screen space.

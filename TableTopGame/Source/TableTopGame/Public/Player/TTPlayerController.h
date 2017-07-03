@@ -5,6 +5,7 @@
 #include "Player/RTSPlayerController.h"
 #include "TTPlayerController.generated.h"
 class AModelCharacter;
+class ATTPlayerState;
 /**
  * 
  */
@@ -34,11 +35,13 @@ public:
 	void ShootAtTarget();
 	UFUNCTION()
 	void ShowDiceRollInHud(FName ActionName,TArray<uint8> diceRolls, uint8 ValueNeeded, bool smallerIsBetter);
-
+	UFUNCTION()
+	ATableTopPlayerState* GetPlayerState();
 protected:	
 	UPROPERTY()
 	AModelCharacter* SelectedUnit;
 
+	
 	UPROPERTY()
 	AModelCharacter* EnemyTargetUnit;
 	

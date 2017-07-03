@@ -414,8 +414,14 @@
     <None Include="..\..\Config\DefaultEngine.ini" />
     <None Include="..\..\Config\DefaultGame.ini" />
     <None Include="..\..\Source\TableTopGame\TableTopGame.Build.cs" />
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTCharacterUIWidget.cpp" />
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTMainUIWidget.cpp" />
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTUserInterface.cpp" />
     <ClCompile Include="..\..\Source\TableTopGame\Private\Utility_BP.cpp" />
     <ClCompile Include="..\..\Source\TableTopGame\TableTopGame.cpp" />
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTCharacterUIWidget.h" />
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTMainUIWidget.h" />
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTUserInterface.h" />
     <ClInclude Include="..\..\Source\TableTopGame\Public\Utility_BP.h" />
     <ClInclude Include="..\..\Source\TableTopGame\TableTopGame.h" />
     <ClCompile Include="..\..\Source\TableTopGame\TableTopGameGameMode.cpp" />

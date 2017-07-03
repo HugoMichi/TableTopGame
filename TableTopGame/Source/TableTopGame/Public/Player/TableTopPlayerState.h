@@ -35,7 +35,7 @@ EPlayerPhase& operator++(EPlayerPhase& cur) {
 	}
 };*/
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCurrentPhaseChanged);
 
 UCLASS()
 class TABLETOPGAME_API ATableTopPlayerState : public APlayerState
@@ -45,10 +45,12 @@ public:
 	ATableTopPlayerState(const FObjectInitializer& ObjectInitializer);
 	UFUNCTION()
 	void EndCurrentPhase();
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
 	EPlayerPhase CurrentPhase;
 	//TEnumAsByte<EPlayerPhase> CurrentPhase;
-	
+	UPROPERTY(BlueprintAssignable, Category = "Phase")
+	FCurrentPhaseChanged OnCurrentPhaseChanged;
+
 	//UPROPERTY()
 	TArray<ModelCharacter*> UnitList;
 

@@ -8,6 +8,12 @@
 #include "Public/UI/TableTopHUD.h"
 #include "RTSPlayerController.generated.h"
 
+
+
+/*Delegates*/
+/*Broadcast whenever the selection changes*/
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSelectionChanged);
+
 /**
 *
 */
@@ -41,6 +47,9 @@ protected:
 	/** Navigate player to the given world location. */
 	void SetNewMoveDestination(const FVector DestLocation);
 
+	UPROPERTY(BlueprintAssignable, Category = Selection)
+	FSelectionChanged OnSelectionChanged;
+
 	void OnSetSelectedUnderCursorPressed();
 	void OnSetSelectedUnderCursorReleased();
 
@@ -50,6 +59,7 @@ protected:
 	void OnMouseMove(float axisValue);
 protected:
 	/*Selection Properties and function*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selection")
 	TArray<AActor*> SelectedObjects;
 	/*helper function to Empty Array and Notify the Actors of lostSelection */
 	void NotifyAndEmptySelectedObjects();

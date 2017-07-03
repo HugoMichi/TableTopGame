@@ -154,10 +154,28 @@
     <ClInclude Include="..\..\Source\TableTopGame\Public\Utility_BP.h">
       <Filter>Source\TableTopGame\Public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTUserInterface.h">
+      <Filter>Source\TableTopGame\Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTMainUIWidget.h">
+      <Filter>Source\TableTopGame\Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TableTopGame\Public\UI\TTCharacterUIWidget.h">
+      <Filter>Source\TableTopGame\Public\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\TableTopGame\Private\Utility_BP.cpp">
       <Filter>Source\TableTopGame\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTUserInterface.cpp">
+      <Filter>Source\TableTopGame\Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTMainUIWidget.cpp">
+      <Filter>Source\TableTopGame\Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TableTopGame\Private\UI\TTCharacterUIWidget.cpp">
+      <Filter>Source\TableTopGame\Private\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

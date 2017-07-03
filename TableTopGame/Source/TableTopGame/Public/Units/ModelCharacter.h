@@ -4,8 +4,11 @@
 
 #include "GameFramework/Character.h"
 #include "Public/Units/TTAttribute.h"
+#include "Public/Units/RTSCharacter.h"
+//#include "Public/UI/TTCharacterUIWidget.h"
 #include "ModelCharacter.generated.h"
 
+class UTTCharacterUIWidget;
 class ATTWeapon;
 
 USTRUCT(BlueprintType)
@@ -16,9 +19,11 @@ struct TABLETOPGAME_API FD6DiceResult
 		int	numberOFSuccesDice;
 };
 
+/* Delegates*/
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributesChanged);
 
 UCLASS()
-class TABLETOPGAME_API AModelCharacter : public ACharacter
+class TABLETOPGAME_API AModelCharacter : public ARTSCharacter
 {
 	GENERATED_BODY()
 
@@ -88,40 +93,51 @@ private:
 
 
 protected:
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	/*Model Attributes*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelAttributes)
 	FName UnitName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(BlueprintAssignable, Category = "ModelAttributes")
+	FAttributesChanged OnAttributesChanged;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute WeoponsSkill;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute BallisticSkill;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-	FAttribute Streangth;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
+	FAttribute Strength;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute Toughness;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute Wounds;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute Initiative;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute Attacks;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute Leadership;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute ArmourSave;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	uint8 InvulnerableSave;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	uint8 CoverSave;
 
 	uint8 WoundsTakenThisPhase = 0;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	TArray<ATTWeapon*> Weapons;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	ATTWeapon* CurrentWeapon;
 
 	
+	/*UI Representation override from RTSChar	*/
+	//*Used for displaying Information of the unit in the ui */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UTTCharacterUIWidget> UIWidgetBP;
 
-	
+	UTTCharacterUIWidget* UIWidget;
+public:
+	UFUNCTION(BlueprintNativeEvent, Category = "Selection")
+	UUserWidget*  GetUIWidget();//TODO: Test if this or parent Version is called when used in interface
 };

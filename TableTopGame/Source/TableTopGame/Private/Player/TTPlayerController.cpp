@@ -2,6 +2,7 @@
 
 #include "TableTopGame.h"
 #include "ModelCharacter.h"
+#include "TableTopPlayerState.h"
 #include "TTPlayerController.h"
 
 bool ATTPlayerController::MoveUnitTo(const FVector Location)
@@ -31,4 +32,11 @@ void ATTPlayerController::ShootAtTarget()
 void ATTPlayerController::ShowDiceRollInHud(FName ActionName,TArray<uint8> diceRolls, uint8 ValueNeeded, bool smallerIsBetter)
 {
 
+}
+
+
+
+ATableTopPlayerState* ATTPlayerController::GetPlayerState() 
+{		
+	return Cast<ATableTopPlayerState>(AController::PlayerState);
 }

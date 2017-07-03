@@ -4,6 +4,7 @@
 
 #include "GameFramework/Character.h"
 #include "Public/StrategySelectionInterface.h"
+#include "Blueprint/UserWidget.h"
 #include "RTSCharacter.generated.h"
 
 
@@ -14,7 +15,7 @@ class TABLETOPGAME_API ARTSCharacter : public ACharacter, public IStrategySelect
 
 public:
 	// Sets default values for this character's properties
-	ARTSCharacter();
+	ARTSCharacter(const FObjectInitializer& ObjectInitializer);
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,19 +24,30 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* AInputComponent) override;
 
 	//SELECTION INTERFACE
 	/** tries to select actor */
-	UFUNCTION(BlueprintNativeEvent)
-		bool OnSelectionGained();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Selection")
+	bool OnSelectionGained();
 
 	/** tries to deselect actor */
-	UFUNCTION(BlueprintNativeEvent)
-		bool OnSelectionLost();
+	UFUNCTION(BlueprintNativeEvent,Category = "Selection")
+	bool OnSelectionLost();
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Selection")
-		FString GetName();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable,Category = "Selection")
+	FString GetName();
+
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Selection")
+	UUserWidget*  GetUIWidget();
+protected:
+	//*Used for displaying Information of the unit in the ui */
+	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<UUserWidget> UIWidgetBP;
+
+	UUserWidget* UIWidget;*/
+
 
 
 };

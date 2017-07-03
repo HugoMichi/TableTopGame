@@ -3,6 +3,7 @@
 #include "TableTopGame.h"
 #include "TTWeapon.h"
 #include "Public/Player/TTPlayerController.h"
+#include "Public/UI/TTCharacterUIWidget.h"
 #include "Public/TTGameMode.h"
 #include <EngineGlobals.h>
 #include <Runtime/Engine/Classes/Engine/Engine.h>
@@ -24,7 +25,12 @@ AModelCharacter::AModelCharacter(const FObjectInitializer& ObjectInitializer)
 void AModelCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (UIWidgetBP)
+	{
+		//UUserWidget* Widget = UIWidgetBP->GetDefaultObject<UUserWidget>();
+		UIWidget = CreateWidget<UTTCharacterUIWidget>(GetWorld(), UIWidgetBP);
+		UIWidget->SetCharacter(this);
+	}
 }
 
 // Called every frame
@@ -35,9 +41,9 @@ void AModelCharacter::Tick( float DeltaTime )
 }
 
 // Called to bind functionality to input
-void AModelCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent)
+void AModelCharacter::SetupPlayerInputComponent(UInputComponent* AInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(AInputComponent);
 
 }
 
@@ -206,3 +212,7 @@ TArray<uint8> AModelCharacter::GetD6DiceRoll(uint16 NumberOfDices)
 }
 
 
+UUserWidget*  AModelCharacter::GetUIWidget_Implementation()
+{
+	return UIWidget;
+}

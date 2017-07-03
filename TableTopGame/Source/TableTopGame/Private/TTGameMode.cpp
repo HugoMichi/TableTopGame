@@ -3,13 +3,14 @@
 #include "TableTopGame.h"
 #include "Public/Player/TTPlayerController.h"
 #include "Public/Player/TableTopPlayerState.h"
+#include "Public/TableTopGameState.h"
 #include "TTGameMode.h"
 
 
 ATTGameMode::ATTGameMode()
 {
 // use our custom PlayerController class
-PlayerControllerClass = ARTSPlayerController::StaticClass();
+PlayerControllerClass = ATTPlayerController::StaticClass();
 
 // set default pawn class to our Blueprinted character
 //static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDownCPP/Blueprints/TopDownCharacter"));
@@ -18,8 +19,9 @@ if (PlayerPawnBPClass.Class != NULL)
 {
 	DefaultPawnClass = PlayerPawnBPClass.Class;
 }
+GameStateClass = ATableTopGameState::StaticClass();
 PlayerStateClass = ATableTopPlayerState::StaticClass();
-//HUDClass = AStrategyHUD::StaticClass();
+HUDClass = ATableTopHUD::StaticClass();
 }
 
 void ATTGameMode::BroadcastDiceRoll(APlayerController * RollingPlayer, FName ActionName, TArray<uint8> DiceResults, uint8 ValueNeeded, bool smallerIsBetter)

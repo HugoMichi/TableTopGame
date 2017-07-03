@@ -38,7 +38,7 @@ struct TABLETOPGAME_API FAttributeModifier
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	uint8 BaseValue;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
 	FName ModifierName;
 	bool operator<(const FAttributeModifier &B) {
 		return ModifierType < B.ModifierType;
@@ -52,7 +52,7 @@ struct TABLETOPGAME_API FAttributeModifier
 
 };
 
-/** Broadcasts whenever the layer changes */
+/** Broadcasts whenever the an Attribute changes */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributeChangedEvent);
 
 USTRUCT(BlueprintType)
@@ -62,19 +62,14 @@ struct TABLETOPGAME_API FAttribute
 
 	FAttribute() {
 		FAttribute(0);
-		//BaseValue = 0;
-		//CalculateFinalValue();
 	}
 	FAttribute(uint8 baseValue) {		
 	
 		FAttribute(baseValue,TArray<FAttributeModifier>());
-		//this->BaseValue = baseValue;
-		//CalculateFinalValue();
 	}
 	FAttribute(uint8 baseValue, TArray<FAttributeModifier> modifiers) {	
 		ClampValueMin = 0;
 		ClampValueMax = 10;
-		//FAttribute(baseValue);
 		this->BaseValue = baseValue;
 		this->Modifiers = modifiers;
 		CalculateFinalValue();
@@ -86,20 +81,22 @@ struct TABLETOPGAME_API FAttribute
 /** Broadcasts whenever the layer changes */
 	UPROPERTY(BlueprintAssignable,Category = ModelCharacteristics)
 	FAttributeChangedEvent ChangedEvent;
+
 	FAttributeChangedEvent& OnChanged() { return ChangedEvent; }
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		uint8 BaseValue;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		uint8 ClampValueMax;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		uint8 ClampValueMin;
-	UPROPERTY()
-		uint8 FinalValue;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	uint8 BaseValue;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	uint8 ClampValueMax;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	uint8 ClampValueMin;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	uint8 FinalValue;
 
 	/* Defines if a larger Value of an attribute ist better or a smaller  */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelCharacteristics)
-		bool bLargeValueIsBetter = true;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
+	bool bLargeValueIsBetter = true;
 	/*Array used to store all active Modifiers*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attribute")
 	TArray<FAttributeModifier> Modifiers;
 
 	void CalculateFinalValue() {
@@ -157,12 +154,11 @@ struct TABLETOPGAME_API FAttribute
 		ChangedEvent.Broadcast();
 		return res;
 	}
-
 	uint8 GetBaseValue() {
 		return BaseValue;
 	}
 	uint8 GetFinalValue() {
-		return BaseValue;
+		return FinalValue;
 	}
 };
 /*Class is used to expose structs special functions to Blueprint*/

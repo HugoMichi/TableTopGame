@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TableTopGame.h"
+#include "Blueprint/UserWidget.h"
 #include "Public/Units/RTSCharacter.h"
 
 
 // Sets default values
-ARTSCharacter::ARTSCharacter()
+ARTSCharacter::ARTSCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -16,6 +18,13 @@ ARTSCharacter::ARTSCharacter()
 void ARTSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	/*if(UIWidgetBP) 
+	{
+		//UUserWidget* Widget = UIWidgetBP->GetDefaultObject<UUserWidget>();
+		UIWidget = CreateWidget<UUserWidget>(GetWorld(), UIWidgetBP);
+
+	}*/
+	
 
 }
 
@@ -27,9 +36,9 @@ void ARTSCharacter::Tick(float DeltaTime)
 }
 
 // Called to bind functionality to input
-void ARTSCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void ARTSCharacter::SetupPlayerInputComponent(class UInputComponent* AInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(AInputComponent);
 
 }
 
@@ -48,3 +57,7 @@ FString ARTSCharacter::GetName_Implementation()
 	return FString();
 }
 
+UUserWidget*  ARTSCharacter::GetUIWidget_Implementation()
+{
+	return nullptr;
+}
