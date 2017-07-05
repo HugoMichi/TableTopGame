@@ -6,9 +6,6 @@
 #include "Public/Utility_BP.h"
 
 
-/*EPlayerPhase::operator++(EPlayerPhase& phase) {
-
-}*/
 ATableTopPlayerState::ATableTopPlayerState(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer) 
 {

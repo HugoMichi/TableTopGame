@@ -8,9 +8,9 @@
 
 
 void UTTAttribute::AddModifier(FAttribute AttributeStruct,FAttributeModifier mod){
-AttributeStruct.AddModifier(mod);
+	AttributeStruct.AddModifier(mod);
 }
 
 int32 UTTAttribute::RemoveModifier(FAttribute AttributeStruct,FAttributeModifier mod) {
-return AttributeStruct.RemoveModifier(mod);
+	return AttributeStruct.RemoveModifier(mod);
 }

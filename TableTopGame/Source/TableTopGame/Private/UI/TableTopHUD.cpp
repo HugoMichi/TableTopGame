@@ -31,8 +31,11 @@ void ATableTopHUD::BeginPlay() {
 	if (MainUIWidgetBP) {
 		// the player controller should be constructed by now so we can get a reference to it
 		MainUIWidget = CreateWidget<UTTMainUIWidget>(this->GetOwningPlayerController(), this->MainUIWidgetBP);
-		MainUIWidget->AddToViewport();
+		MainUIWidget->AddToPlayerScreen();
+		//this->GetOwningPlayerController()->PushInputComponent(InputComponent);
+		//GetOwner().Pthis->InputComponent
 	}
+	
 }
 
 

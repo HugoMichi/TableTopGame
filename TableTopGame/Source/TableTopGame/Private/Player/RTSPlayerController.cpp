@@ -10,13 +10,20 @@ ARTSPlayerController::ARTSPlayerController(const FObjectInitializer& ObjectIniti
 {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
-
 }
 
 void ARTSPlayerController::PlayerTick(float DeltaTime)
 {
 	Super::PlayerTick(DeltaTime);
 
+
+	/*TArray<TSharedRef<SWindow>> widgetsUnderMouse;
+	FSlateApplication::Get().LocateWindowUnderMouse(GetScreenMousePosition(), widgetsUnderMouse);
+	if (widgetsUnderMouse.Num() > 0) {
+		FInputModeCustom GameMode;
+		GameMode.SetWidgetToFocus(widgetsUnderMouse[0]);
+		SetInputMode(GameMode);
+	}*/
 	// keep updating the destination every tick while desired
 	/*	if (bMoveToMouseCursor)
 	{
@@ -38,6 +45,10 @@ void ARTSPlayerController::SetupInputComponent()
 	mouseMoveX.bConsumeInput = false;
 	FInputAxisBinding& mouseMoveY = InputComponent->BindAxis("MouseMoveY", this, &ARTSPlayerController::OnMouseMove);
 	mouseMoveY.bConsumeInput = false;
+	FInputModeGameAndUI GameMode;
+	GameMode.SetHideCursorDuringCapture(false);
+	GameMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
+	SetInputMode(GameMode);//Not Allowed during Construction 
 	
 	//InputComponent->BindAction("SetDestination", IE_Pressed, this, &ARTSPlayerController::OnSetDestinationPressed);
 	//InputComponent->BindAction("SetDestination", IE_Released, this, &ARTSPlayerController::OnSetDestinationReleased);
@@ -133,13 +144,18 @@ void ARTSPlayerController::OnSetSelectedUnderCursorPressed()
 
 void ARTSPlayerController::OnSetSelectedUnderCursorReleased()
 {
-	UE_LOG(LogTemp, Warning, TEXT("StartSelected!!!!!"));
+	//Cast<ULocalPlayer>(Player)->ViewportClient->Viewport.->SetMouse(mouseLockPositionX, mouseLockPositionY);
+	bool click = bEnableClickEvents;
+	bool over = bEnableMouseOverEvents;
+
+	UE_LOG(LogTemp, Warning, TEXT("StartSelected!!!!! Over:%s Click:%s"), *FString(click ? "True": "False"), *FString(over ? "True": "False"));
 	bBoundingBoxStarted = false;
 	/*setting Selection box to default*/
 	ATableTopHUD* hud = GetHUD();
 	TArray<AActor*> outActors;
 	if (hud) {
 		//TODO:: is Canvas Draw Function !!! should be called only during Hud-DrawHud()!!!!!
+		//MayBe Implement Function in Hud
 		GetActorsInSelectionRectangle(APawn::StaticClass(), hud->SelectionRect.Min, hud->SelectionRect.Max, outActors, false, false);
 		hud->SelectionRect = FBox2D(FVector2D(), FVector2D());
 	}
@@ -163,6 +179,9 @@ void ARTSPlayerController::OnSetSelectedUnderCursorReleased()
 		//UE_LOG(LogTemp, Warning, TEXT("SelectedName: %s"),*actor->GetName());
 	}*/
 	UE_LOG(LogTemp, Warning, TEXT("EndSelected!!!!!"));
+
+	/*FInputModeGameOnly GameMode;
+	SetInputMode(GameMode);*/
 }
 
 void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActor> ClassFilter, const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<AActor*>& OutActors, bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed)
@@ -179,8 +198,6 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 	//		no matter what the coordinates of first and second point actually are.
 	SelectionRectangle += FirstPoint;
 	SelectionRectangle += SecondPoint;
-
-
 	//The Actor Bounds Point Mapping
 	const FVector BoundsPointMapping[8] =
 	{
@@ -200,11 +217,8 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 	for (TActorIterator<AActor> Itr(GetWorld(), ClassFilter); Itr; ++Itr)
 	{
 		AActor* EachActor = *Itr;
-
 		//Get Actor Bounds				//casting to base class, checked by template in the .h
-		const FBox EachActorBounds = Cast<AActor>(EachActor)->GetComponentsBoundingBox(bIncludeNonCollidingComponents); /* All Components? */
-
-																														//Center
+		const FBox EachActorBounds = Cast<AActor>(EachActor)->GetComponentsBoundingBox(bIncludeNonCollidingComponents); /* All Components? */																								//Center
 		const FVector BoxCenter = EachActorBounds.GetCenter();
 
 		//Extents
@@ -240,11 +254,26 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 	}UE_LOG(LogTemp, Warning, TEXT("EndGetActor!!!!"));
 }
 
-void ARTSPlayerController::OnMouseMove(float axisValue)
+void ARTSPlayerController::ImitateAxisValue()
 {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! %f"), axisValue));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! x: %f y: %f"), axisValues.X, axisValues.Y));
+
+	FVector2D mousePosition;
+	GetScreenMousePosition(mousePosition);
+	axisValues = LastPosition - mousePosition;
+	LastPosition = mousePosition;
+
+}
+void ARTSPlayerController::OnMouseMove(float axisValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! %f"), axisValue));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! x: %f y: %f"), axisValues.X, axisValues.Y));
+
+	UE_LOG(LogTemp, Warning, TEXT("OnMouseMove: ! %f"), axisValue);
+	//UE_LOG(LogTemp, Warning, TEXT("OnMouseMove: ! x: %f y: %f"), axisValues.X, axisValues.Y);
 	if (bBoundingBoxStarted)
-	{
+	{//
 		FVector2D secondPoint = GetScreenMousePosition();
 		if (SelectionBoxStartPoint != secondPoint) {
 			ATableTopHUD* hud = GetHUD();
@@ -262,8 +291,23 @@ void ARTSPlayerController::NotifyAndEmptySelectedObjects()
 	}SelectedObjects.Empty();
 }
 
-FVector2D ARTSPlayerController::GetScreenMousePosition()
+bool ARTSPlayerController::GetScreenMousePosition(FVector2D& MousePosition)
 {
+#if PLATFORM_DESKTOP
+	const ULocalPlayer* LocalPlayer = GetLocalPlayer();
+	if (LocalPlayer && LocalPlayer->ViewportClient)
+	{
+		if(LocalPlayer->ViewportClient->GetMousePosition(MousePosition))
+			return true;
+	}
+#endif
+
+	return false;
+}
+
+
+FVector2D ARTSPlayerController::GetScreenMousePosition()
+{	
 	FVector2D mousePosition;
 	//Get mouse position and screen size
 	UGameViewportClient* gameViewport = GEngine->GameViewport;
@@ -275,6 +319,7 @@ FVector2D ARTSPlayerController::GetScreenMousePosition()
 	return mousePosition;
 }
 
+
 ATableTopHUD * ARTSPlayerController::GetHUD()
 {
 	return Cast<ATableTopHUD>(MyHUD);
@@ -282,4 +327,39 @@ ATableTopHUD * ARTSPlayerController::GetHUD()
 
 
 
+/*Easy Solution: Use a Mouseclick for all functions needed to use MouseMove 
+this is not working !!!!!!!!! BUG in UE4 not going to be fixed*/
+void FInputModeCustom::ApplyInputMode(FReply & SlateOperations, UGameViewportClient & GameViewportClient) const
+{
+	TSharedPtr<SViewport> ViewportWidget = GameViewportClient.GetGameViewportWidget();
+	if (ViewportWidget.IsValid())
+	{
+		GameViewportClient.SetIgnoreInput(false);
 
+		//GameViewportClient.SetMouseLockMode(MouseLockMode);
+		//GameViewportClient.SetMouseLockMode(EMouseLockMode::LockAlways);
+
+		SlateOperations.ReleaseMouseCapture();
+		//GameViewportClient.SetCaptureMouseOnClick(EMouseCaptureMode::CaptureDuringMouseDown);
+		//sets the viewport to caputre MouseInput after it is clicked
+		//GameViewportClient.SetCaptureMouseOnClick(bConsumeCaptureMouseDown ? EMouseCaptureMode::CapturePermanently : EMouseCaptureMode::CapturePermanently_IncludingInitialMouseDown);
+		
+		GameViewportClient.SetHideCursorDuringCapture(false);//if true hides MouseCursor during click 
+	
+		TSharedRef<SViewport> ViewportWidgetRef = ViewportWidget.ToSharedRef();
+		SlateOperations.UseHighPrecisionMouseMovement(ViewportWidgetRef);
+		//SlateOperations.SetUserFocus(WidgetToFocus.ToSharedRef()); only use if WidgetRef is valid
+		//SlateOperations.SetUserFocus(ViewportWidgetRef);// not needed
+		SlateOperations.LockMouseToWidget(ViewportWidgetRef);//mouse cannot leave Viewport
+		//SlateOperations.ReleaseMouseLock();// opposite to LockMouseToWidget
+		if (this->WidgetToFocus.IsValid()) 
+		{
+			SlateOperations.CaptureMouse(this->WidgetToFocus.ToSharedRef());
+		} else {
+			SlateOperations.CaptureMouse(ViewportWidgetRef);//can be used instead of GameViewportClient.SetCaptureMouseOnClick
+		}
+		//SlateOperations.ReleaseMouseCapture();//no mouse movement capture in viewport
+
+		}
+
+}

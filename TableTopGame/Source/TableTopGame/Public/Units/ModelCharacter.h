@@ -1,15 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+struct FModifierInfo;
 #include "GameFramework/Character.h"
-#include "Public/Units/TTAttribute.h"
 #include "Public/Units/RTSCharacter.h"
+#include "Public/Units/TTItem.h"
+#include "Public/Units/TTAttribute.h"
+
+//#include "Public/Units/TTItem.h"
+//#include "UnitsEnums.h"
 //#include "Public/UI/TTCharacterUIWidget.h"
 #include "ModelCharacter.generated.h"
 
+//struct FModifierInfo;
+class ATTItem;
 class UTTCharacterUIWidget;
 class ATTWeapon;
+//struct FAttribute;
+
 
 USTRUCT(BlueprintType)
 struct TABLETOPGAME_API FD6DiceResult
@@ -19,8 +27,7 @@ struct TABLETOPGAME_API FD6DiceResult
 		int	numberOFSuccesDice;
 };
 
-/* Delegates*/
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributesChanged);
+
 
 UCLASS()
 class TABLETOPGAME_API AModelCharacter : public ARTSCharacter
@@ -92,14 +99,23 @@ private:
 	TArray<uint8> GetD6DiceRoll(uint16 NumberOfDices);
 
 
-protected:
-	/*Model Attributes*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelAttributes)
-	FName UnitName;
-
+public:
+	/* Delegates*/
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributesChanged);
 	UPROPERTY(BlueprintAssignable, Category = "ModelAttributes")
 	FAttributesChanged OnAttributesChanged;
 
+	UFUNCTION(BlueprintCallable, Category = "ModelAttributes")
+	void AddAttributeModifier(struct FModifierInfo& Modifier);
+
+	UFUNCTION(BlueprintCallable, Category = "ModelAttributes")
+	void RemoveAttributeModifier(struct FModifierInfo& Modifier);
+protected:	
+	/*Model Attributes*/
+	UFUNCTION(BlueprintCallable, Category = "ModelAttributes")
+	FAttribute& GetAttributeOnEnum(EAttributes type);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelAttributes)
+	FName UnitName;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute WeoponsSkill;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")

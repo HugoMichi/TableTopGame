@@ -29,6 +29,7 @@ private:
 	/*InventoryWidget Blueprint reference*/
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTTMainUIWidget> MainUIWidgetBP;
+public:
 	UTTMainUIWidget* MainUIWidget;
 
 	//class UClass * MainUIWidgetClass;

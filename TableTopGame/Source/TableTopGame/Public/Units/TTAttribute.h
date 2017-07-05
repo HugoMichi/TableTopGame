@@ -4,8 +4,11 @@
 
 //#include "Engine/UserDefinedStruct.h"
 #include "TableTopGame.h"
+//#include "ModelCharacter.h"
+#include "UnitsEnums.h"
 #include "TTAttribute.generated.h"
 
+class ATTItem;
 /** */
 
 UENUM(BlueprintType)
@@ -22,7 +25,7 @@ USTRUCT(BlueprintType)
 struct TABLETOPGAME_API FAttributeModifier
 {
 	GENERATED_BODY()
-		FAttributeModifier() {
+	FAttributeModifier() {
 		this->ModifierType = EAttributeModifierType::AMT_Add;
 		this->BaseValue = 0;
 		this->ModifierName = TEXT("StandardModifier");
@@ -51,6 +54,7 @@ struct TABLETOPGAME_API FAttributeModifier
 	}
 
 };
+
 
 /** Broadcasts whenever the an Attribute changes */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributeChangedEvent);

@@ -58,25 +58,25 @@ ARTSPlayerPawn::ARTSPlayerPawn(const FObjectInitializer& ObjectInitializer)
 	}
 }
 
-void ARTSPlayerPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void ARTSPlayerPawn::SetupPlayerInputComponent(class UInputComponent* AInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
-	check(InputComponent);
+	Super::SetupPlayerInputComponent(AInputComponent);
+	check(AInputComponent);
 
 	//Bind Mouse Wheel Zooming Actions
-	InputComponent->BindAxis("CameraZoom", this, &ARTSPlayerPawn::OnZoomAction);
+	AInputComponent->BindAxis("CameraZoom", this, &ARTSPlayerPawn::OnZoomAction);
 
 	//Bind WASD Movement
-	InputComponent->BindAxis("MoveForward", this, &ARTSPlayerPawn::MoveCharacterForward);
-	InputComponent->BindAxis("MoveRight", this, &ARTSPlayerPawn::MoveCharacterRight);
-	InputComponent->BindAction("RotateCamera", EInputEvent::IE_Pressed, this, &ARTSPlayerPawn::OnLookAroundStart);
-	InputComponent->BindAction("RotateCamera", EInputEvent::IE_Released, this, &ARTSPlayerPawn::OnLookAroundStop);
-	InputComponent->BindAxis("MouseMoveX", this, &ARTSPlayerPawn::OnMouseHorizontal);
-	InputComponent->BindAxis("MouseMoveY", this, &ARTSPlayerPawn::OnMouseVertical);
+	AInputComponent->BindAxis("MoveForward", this, &ARTSPlayerPawn::MoveCharacterForward);
+	AInputComponent->BindAxis("MoveRight", this, &ARTSPlayerPawn::MoveCharacterRight);
+	AInputComponent->BindAction("RotateCamera", EInputEvent::IE_Pressed, this, &ARTSPlayerPawn::OnLookAroundStart);
+	AInputComponent->BindAction("RotateCamera", EInputEvent::IE_Released, this, &ARTSPlayerPawn::OnLookAroundStop);
 
-
-
-	//Cast<APlayerController>(GetController())->PushInputComponent(InputComponent);
+	FInputAxisBinding& mouseMoveX = AInputComponent->BindAxis("MouseMoveX", this, &ARTSPlayerPawn::OnMouseHorizontal);
+	mouseMoveX.bConsumeInput = false;	
+	FInputAxisBinding& mouseMoveY =AInputComponent->BindAxis("MouseMoveY", this, &ARTSPlayerPawn::OnMouseVertical);
+	mouseMoveY.bConsumeInput = false;
+	Cast<APlayerController>(GetController())->PushInputComponent(InputComponent);
 }
 
 void ARTSPlayerPawn::Tick(float deltaSeconds)
@@ -133,39 +133,41 @@ void ARTSPlayerPawn::MoveCharacterRight(float changeValue)
 }
 
 void ARTSPlayerPawn::OnMouseHorizontal(float axisValue)
-{
+{	
+	
 	if (lookAroundEnabled)
-	{
+	{UE_LOG(LogTemp, Warning, TEXT("MouseMoveInPawnCalled %f"),axisValue);
 		//AddControllerYawInput(axisValue);
-
 		RotateCameraArm(FRotator(0.0f, axisValue, 0.0f));
 		APlayerController* PlayerController = Cast<APlayerController>(GetController());
-		if (PlayerController) {
+		/*if (PlayerController) {
 			Cast<ULocalPlayer>(PlayerController->Player)->ViewportClient->Viewport->SetMouse(mouseLockPositionX, mouseLockPositionY);
-		}
+		}*/
 	}
 }
 
 void ARTSPlayerPawn::OnMouseVertical(float axisValue)
 {
-
+	
 	if (lookAroundEnabled)
-	{
+	{UE_LOG(LogTemp, Warning, TEXT("MouseMoveInPawnCalled"));
 		RotateCameraArm(FRotator(axisValue, 0.0f, 0.0f));
 		APlayerController* PlayerController = Cast<APlayerController>(GetController());
-		if (PlayerController) {
-			Cast<ULocalPlayer>(PlayerController->Player)->ViewportClient->Viewport->SetMouse(mouseLockPositionX, mouseLockPositionY);
-		}
+		/*if (PlayerController) {
+			//Cast<ULocalPlayer>(PlayerController->Player)->ViewportClient->Viewport->SetMouse(mouseLockPositionX, mouseLockPositionY);
+		}*/
 	}
 }
 
 void ARTSPlayerPawn::OnLookAroundStart()
 {
+	
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	//Lock mouse cursor
 	lookAroundEnabled = true;
 	if (PlayerController) {
-		PlayerController->bShowMouseCursor = false;
+		//PlayerController->bShowMouseCursor = false;
+		UE_LOG(LogTemp, Warning, TEXT("CameraRotateStarted"));
 		ULocalPlayer* localPlayer = Cast<ULocalPlayer>(PlayerController->Player);
 		if (localPlayer) {
 			mouseLockPositionX = localPlayer->ViewportClient->Viewport->GetMouseX();
@@ -175,12 +177,14 @@ void ARTSPlayerPawn::OnLookAroundStart()
 }
 void ARTSPlayerPawn::OnLookAroundStop()
 {
+	
 	//Unlock mouse cursor
 	lookAroundEnabled = false;
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	//Lock mouse cursor
 	if (PlayerController) {
-		PlayerController->bShowMouseCursor = true;
+		//PlayerController->bShowMouseCursor = true;
+		UE_LOG(LogTemp, Warning, TEXT("CameraRotateFinished"));
 	}
 }
 void ARTSPlayerPawn::DoEdgeMovement()

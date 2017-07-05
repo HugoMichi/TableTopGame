@@ -10,6 +10,50 @@
 
 
 
+
+struct  TABLETOPGAME_API FInputModeCustom : public FInputModeDataBase
+{
+	/** Widget to focus */
+	FInputModeCustom& SetWidgetToFocus(TSharedPtr<SWidget> InWidgetToFocus) { WidgetToFocus = InWidgetToFocus; return *this; }
+
+	/** Whether to lock the mouse to the viewport */
+	DEPRECATED(4.13, "Mouse locking behavior is now controlled by an enum. Please use SetLockMouseToViewportBehavior(...) instead.")
+	FInputModeCustom& SetLockMouseToViewport(bool InLockMouseToViewport) { return SetLockMouseToViewportBehavior(InLockMouseToViewport ? EMouseLockMode::LockOnCapture : EMouseLockMode::DoNotLock); }
+
+	/** Sets the mouse locking behavior of the viewport */
+	FInputModeCustom& SetLockMouseToViewportBehavior(EMouseLockMode InMouseLockMode) { MouseLockMode = InMouseLockMode; return *this; }
+
+	/** Whether to hide the cursor during temporary mouse capture caused by a mouse down */
+	FInputModeCustom& SetHideCursorDuringCapture(bool InHideCursorDuringCapture) { bHideCursorDuringCapture = InHideCursorDuringCapture; return *this; }
+	/** Whether the mouse down that causes capture should be consumed, and not passed to player input processing */
+	FInputModeCustom& SetConsumeCaptureMouseDown(bool InConsumeCaptureMouseDown) { bConsumeCaptureMouseDown = InConsumeCaptureMouseDown; return *this; }
+
+	FInputModeCustom()
+		: WidgetToFocus()
+		, MouseLockMode(EMouseLockMode::DoNotLock)
+		, bHideCursorDuringCapture(false)
+		,bConsumeCaptureMouseDown(true)
+	{}
+
+protected:
+
+	TSharedPtr<SWidget> WidgetToFocus;
+	EMouseLockMode MouseLockMode;
+	bool bHideCursorDuringCapture;
+	bool bConsumeCaptureMouseDown;
+	virtual void ApplyInputMode(FReply& SlateOperations, class UGameViewportClient& GameViewportClient) const override;
+};
+
+
+
+
+
+
+
+
+
+
+
 /*Delegates*/
 /*Broadcast whenever the selection changes*/
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSelectionChanged);
@@ -57,7 +101,12 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 	void OnMouseMove(float axisValue);
+
 protected:
+	/*imitate axisValue of MouseInput because its consumed by UI Widgets*/
+	FVector2D LastPosition;
+	FVector2D axisValues;
+	void ImitateAxisValue();
 	/*Selection Properties and function*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selection")
 	TArray<AActor*> SelectedObjects;
@@ -77,6 +126,7 @@ protected:
 	FVector2D SelectionBoxStartPoint;
 
 	AActor* GetSelectableActorUnderCursor();
+	bool GetScreenMousePosition(FVector2D& MousePosition);
 	FVector2D GetScreenMousePosition();
 	ATableTopHUD* GetHUD();
 

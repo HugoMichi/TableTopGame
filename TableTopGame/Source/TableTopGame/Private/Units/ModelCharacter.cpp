@@ -6,6 +6,7 @@
 #include "Public/UI/TTCharacterUIWidget.h"
 #include "Public/TTGameMode.h"
 #include <EngineGlobals.h>
+#include "Public/Units/TTItem.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 #include "Public/Units/ModelCharacter.h"
 
@@ -209,6 +210,58 @@ TArray<uint8> AModelCharacter::GetD6DiceRoll(uint16 NumberOfDices)
 		randomArray.Add(FMath::RandRange(0, 6));
 	}
 	return randomArray;
+}
+
+void AModelCharacter::AddAttributeModifier(struct FModifierInfo& Modifier)
+{
+	FAttribute attrToChange = GetAttributeOnEnum(Modifier.Attribute);
+	attrToChange.AddModifier(Modifier.Modifier);
+	OnAttributesChanged.Broadcast();
+}
+
+void AModelCharacter::RemoveAttributeModifier(FModifierInfo & Modifier)
+{
+	FAttribute attrToChange = GetAttributeOnEnum(Modifier.Attribute);
+	attrToChange.RemoveModifier(Modifier.Modifier);
+	OnAttributesChanged.Broadcast();
+}
+
+FAttribute& AModelCharacter::GetAttributeOnEnum(EAttributes type)
+{
+	switch (type)
+	{
+	case EAttributes::A_WeoponsSkill:
+		return WeoponsSkill;
+		break;
+	case EAttributes::A_BallisticSkill:
+		return BallisticSkill;
+		break;
+	case EAttributes::A_Strength:
+		return Strength;
+		break;
+	case EAttributes::A_Toughness:
+		return Toughness;
+		break;
+	case EAttributes::A_Wounds:
+		return Wounds;
+		break;
+	case EAttributes::A_Initiative:
+		return Initiative;
+		break;
+	case EAttributes::A_Attacks:
+		return Attacks;
+		break;
+	case EAttributes::A_Leadership:
+		return Leadership;
+		break;
+	case EAttributes::A_ArmourSave:
+		return ArmourSave;
+		break;
+	default:
+		return ArmourSave;
+		break;
+	}
+
 }
 
 
