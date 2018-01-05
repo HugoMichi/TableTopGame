@@ -29,6 +29,10 @@ private:
 	/*InventoryWidget Blueprint reference*/
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTTMainUIWidget> MainUIWidgetBP;
+
+	/*usagee.g.:  openWidget<UUserWidget>(TEXT("/Game/Sandbox/UI/W_SystemInfo.W_SystemInfo_C"));*/
+	template<typename T>
+	T* openWidget(FString widget_name);
 public:
 	UTTMainUIWidget* MainUIWidget;
 

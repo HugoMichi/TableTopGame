@@ -114,8 +114,10 @@ protected:
 	/*Model Attributes*/
 	UFUNCTION(BlueprintCallable, Category = "ModelAttributes")
 	FAttribute& GetAttributeOnEnum(EAttributes type);
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ModelAttributes)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FName UnitName;
+	TMap<EAttributes, FAttribute> Attributes;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute WeoponsSkill;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")

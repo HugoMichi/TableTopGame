@@ -55,6 +55,20 @@ void ATableTopHUD::SetSelectionRect(FVector2D startPoint, FVector2D endPoint)
 	SelectionRect = FBox2D(startPoint, endPoint);
 }
 
+template<typename T>
+T* ATableTopHUD::openWidget(FString widget_name) {
+	FStringClassReference big_inventory_widget_ref(widget_name);
+	if (UClass* w = big_inventory_widget_ref.TryLoadClass<T>()) {
+		T* widget = CreateWidget<T>(GetWorld(), w);
+		widget->AddToViewport();
+		return widget;
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("widget %s is not found"), *widget_name);
+		return NULL;
+	}
+}
+
 
 
 

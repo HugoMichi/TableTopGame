@@ -17,6 +17,16 @@ AModelCharacter::AModelCharacter(const FObjectInitializer& ObjectInitializer)
 {	
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+
+	/*Adds Standard W40K Attributes for Testing should be done in Blueprints or Child Class*/
+	const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EAttributes"), true);
+	int numElements = enumPtr->NumEnums() - 1;//because of MAX EnumValue
+	for (int idx = 0; idx < numElements; idx++)
+	{
+		EAttributes enumValue = (EAttributes)enumPtr->GetValueByIndex(idx);
+		Attributes.Add(enumValue, FAttribute());
+	}
 
 
 
@@ -221,7 +231,7 @@ void AModelCharacter::AddAttributeModifier(struct FModifierInfo& Modifier)
 
 void AModelCharacter::RemoveAttributeModifier(FModifierInfo & Modifier)
 {
-	FAttribute attrToChange = GetAttributeOnEnum(Modifier.Attribute);
+	FAttribute& attrToChange = GetAttributeOnEnum(Modifier.Attribute);
 	attrToChange.RemoveModifier(Modifier.Modifier);
 	OnAttributesChanged.Broadcast();
 }

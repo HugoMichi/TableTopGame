@@ -4,7 +4,7 @@ using UnrealBuildTool;
 
 public class TableTopGame : ModuleRules
 {
-	public TableTopGame(TargetInfo Target)
+	public TableTopGame(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
 

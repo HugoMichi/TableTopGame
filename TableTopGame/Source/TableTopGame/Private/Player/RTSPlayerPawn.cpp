@@ -121,14 +121,14 @@ void ARTSPlayerPawn::RotateCameraArm(FRotator rotation)
 void ARTSPlayerPawn::MoveCharacterForward(float changeValue)
 {
 	//Gets the ForwardVector of the CameraBoom ignoring Pitch and Roll
-	AddMovementInput(FRotator(0.0f, CameraBoom->ComponentToWorld.Rotator().Yaw, 0.0f).Vector(), changeValue);
+	AddMovementInput(FRotator(0.0f, CameraBoom->GetComponentToWorld().Rotator().Yaw, 0.0f).Vector(), changeValue);
 
 	//MoveForward(changeValue);
 }
 
 void ARTSPlayerPawn::MoveCharacterRight(float changeValue)
 {					//Gets the RightHandVector of the CameraBoom ignoring Pitch and Roll
-	AddMovementInput(FRotator(0.0f, CameraBoom->ComponentToWorld.Rotator().Yaw + 90.0f, 0.0f).Vector(), changeValue);
+	AddMovementInput(FRotator(0.0f, CameraBoom->GetComponentToWorld().Rotator().Yaw + 90.0f, 0.0f).Vector(), changeValue);
 	//MoveRight(changeValue);
 }
 
