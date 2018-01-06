@@ -48,7 +48,10 @@ void ARTSPlayerController::SetupInputComponent()
 	FInputModeGameAndUI GameMode;
 	GameMode.SetHideCursorDuringCapture(false);
 	GameMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
-	SetInputMode(GameMode);//Not Allowed during Construction 
+	SetInputMode(GameMode);	//Not Allowed during Construction 
+	InputComponent->BindAction("OpenMenu", EInputEvent::IE_Pressed, this, &ARTSPlayerController::OnOpenMenu);
+	//MainMenu
+
 	
 	//InputComponent->BindAction("SetDestination", IE_Pressed, this, &ARTSPlayerController::OnSetDestinationPressed);
 	//InputComponent->BindAction("SetDestination", IE_Released, this, &ARTSPlayerController::OnSetDestinationReleased);
@@ -59,6 +62,17 @@ void ARTSPlayerController::SetupInputComponent()
 	//InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &ARTSPlayerController::MoveToTouchLocation);
 	//InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &ARTSPlayerController::MoveToTouchLocation);
 }
+
+void ARTSPlayerController::OnOpenMenu() {
+	/*UserInterface = CreateWidget<UMyMenuWidget>(this, UMyMenuWidget::StaticClass());
+	FInputModeGameAndUI Mode;
+	Mode.SetLockMouseToViewport(true);
+	Mode.SetHideCursorDuringCapture(false);
+	SetInputMode(Mode);
+	UserInterface->AddToViewport(9999);*/
+	//TODO::
+}
+
 void ARTSPlayerController::OnTest() 
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Test Function Called"));

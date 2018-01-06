@@ -78,6 +78,10 @@ protected:
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 	// End PlayerController interface
+
+	//
+	void OnOpenMenu();
+
 	//TestFunction
 	void OnTest();
 
