@@ -1,7 +1,7 @@
 // Fill your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Public/StrategySelectionInterface.h"
 #include "Blueprint/UserWidget.h"
@@ -13,7 +13,12 @@ class TABLETOPGAME_API ARTSCharacter : public ACharacter, public IStrategySelect
 {
 	GENERATED_BODY()
 
+	
 public:
+
+	
+
+
 	// Sets default values for this character's properties
 	ARTSCharacter(const FObjectInitializer& ObjectInitializer);
 
@@ -41,6 +46,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Selection")
 	UUserWidget*  GetUIWidget();
+
 protected:
 	//*Used for displaying Information of the unit in the ui */
 	/*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")

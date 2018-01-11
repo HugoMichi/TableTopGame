@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Public/UI/TableTopHUD.h"
 #include "TableTopGame.h"
 #include "Runtime/UMG/Public/UMG.h"
 #include "Runtime/UMG/Public/UMGStyle.h"
@@ -9,7 +9,7 @@
 #include "Runtime/UMG/Public/Blueprint/UserWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "UI/TTMainUIWidget.h"
-#include "Public/UI/TableTopHUD.h"
+
 
 
 ATableTopHUD::ATableTopHUD(const FObjectInitializer& ObjectInitializer) 

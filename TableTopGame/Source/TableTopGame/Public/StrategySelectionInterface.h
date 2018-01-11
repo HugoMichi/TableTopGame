@@ -1,4 +1,5 @@
 #pragma once
+#include "CoreMinimal.h"
 #include "TableTopGame.h"
 #include "Runtime/UMG/Public/UMG.h"
 #include "Runtime/UMG/Public/UMGStyle.h"

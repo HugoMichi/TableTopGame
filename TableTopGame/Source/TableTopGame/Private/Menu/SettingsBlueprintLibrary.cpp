@@ -1,7 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TableTopGame.h"
 #include "SettingsBlueprintLibrary.h"
+#include "TableTopGame.h"
+#include "GameFramework/InputSettings.h"
+#include "GameFramework/GameUserSettings.h"
+#include "EngineUtils.h"
+
 
 
 

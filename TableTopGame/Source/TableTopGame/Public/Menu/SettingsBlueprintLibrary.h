@@ -7,6 +7,7 @@
 #include "Components/InputComponent.h"
 #include "Engine/EngineTypes.h"
 #include "GestureRecognizer.h"
+#include "GameFramework/PlayerInput.h"
 #include "InputCoreTypes.h"
 #include "KeyState.h"
 #include "SettingsBlueprintLibrary.generated.h"

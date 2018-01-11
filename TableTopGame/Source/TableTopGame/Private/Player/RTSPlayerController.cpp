@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TableTopGame.h"
 #include "Public/Player/RTSPlayerController.h"
+#include "TableTopGame.h"
+
 #include "AI/Navigation/NavigationSystem.h"
 #include "Public/Player/TableTopPlayerState.h"
 

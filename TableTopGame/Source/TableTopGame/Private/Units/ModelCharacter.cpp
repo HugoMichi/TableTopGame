@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Public/Units/ModelCharacter.h"
 #include "TableTopGame.h"
 #include "TTWeapon.h"
 #include "Public/Player/TTPlayerController.h"
@@ -8,7 +9,7 @@
 #include <EngineGlobals.h>
 #include "Public/Units/TTItem.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
-#include "Public/Units/ModelCharacter.h"
+
 
 
 // Sets default values
@@ -18,6 +19,10 @@ AModelCharacter::AModelCharacter(const FObjectInitializer& ObjectInitializer)
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
+
+	// Our ability system component.
+	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
+
 
 	/*Adds Standard W40K Attributes for Testing should be done in Blueprints or Child Class*/
 	const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EAttributes"), true);
@@ -42,6 +47,22 @@ void AModelCharacter::BeginPlay()
 		UIWidget = CreateWidget<UTTCharacterUIWidget>(GetWorld(), UIWidgetBP);
 		UIWidget->SetCharacter(this);
 	}
+
+	//if (AbilitySystem)
+	//{
+	//	if (HasAuthority())//&& AbilitySet) check not needed because AbilitySet is no Pointer
+	//	{
+	//		for (const Ability& BindInfo : Abilities)
+	//		{
+	//			if (BindInfo.GameplayAbilityClass)
+	//			{
+	//				AbilitySystem->GiveAbility(FGameplayAbilitySpec(BindInfo.GameplayAbilityClass->GetDefaultObject<UGameplayAbility>(), 1, (int32)BindInfo.Command));
+	//			}
+	//		}
+	//		AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, 0));
+	//	}
+	//	AbilitySystem->InitAbilityActorInfo(this, this);
+	
 }
 
 // Called every frame

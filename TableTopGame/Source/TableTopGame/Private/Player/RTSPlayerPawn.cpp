@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TableTopGame.h"
 #include "Public/Player/RTSPlayerPawn.h"
+#include "Gameframework/SpectatorPawnMovement.h"
+#include "TableTopGame.h"
+
 
 ARTSPlayerPawn::ARTSPlayerPawn(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

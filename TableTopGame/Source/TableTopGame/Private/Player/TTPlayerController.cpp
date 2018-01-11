@@ -1,9 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TTPlayerController.h"
 #include "TableTopGame.h"
 #include "ModelCharacter.h"
 #include "TableTopPlayerState.h"
-#include "TTPlayerController.h"
+
 
 bool ATTPlayerController::MoveUnitTo(const FVector Location)
 {

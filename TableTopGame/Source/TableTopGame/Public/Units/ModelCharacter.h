@@ -1,17 +1,20 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-struct FModifierInfo;
+
+#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Public/Units/RTSCharacter.h"
 #include "Public/Units/TTItem.h"
 #include "Public/Units/TTAttribute.h"
-
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 //#include "Public/Units/TTItem.h"
 //#include "UnitsEnums.h"
 //#include "Public/UI/TTCharacterUIWidget.h"
 #include "ModelCharacter.generated.h"
 
+struct FModifierInfo;
 //struct FModifierInfo;
 class ATTItem;
 class UTTCharacterUIWidget;
@@ -30,7 +33,7 @@ struct TABLETOPGAME_API FD6DiceResult
 
 
 UCLASS()
-class TABLETOPGAME_API AModelCharacter : public ARTSCharacter
+class TABLETOPGAME_API AModelCharacter : public ARTSCharacter , public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -51,6 +54,20 @@ public:
 	FName GetUnitName() {
 		return UnitName;
 	}
+
+	////** ability system */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
+		class UAbilitySystemComponent* AbilitySystem;
+
+	UAbilitySystemComponent* GetAbilitySystemComponent() const override //We add this function, overriding it from IAbilitySystemInterface.
+	{
+		return AbilitySystem;
+	};
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<UGameplayAbility> > AbilitySet;
+	//UGameplayAbilitySet* AbilitySet;
+
+
 
 	/*Movement Phase*/
 	UFUNCTION()

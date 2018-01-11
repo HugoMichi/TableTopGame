@@ -2,7 +2,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Public/StrategySelectionInterface.h"
 #include "Public/UI/TableTopHUD.h"

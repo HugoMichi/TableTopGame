@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Public/Player/TableTopPlayerState.h"
 #include "TableTopGame.h"
 #include "CoreMinimal.h"
-#include "Public/Player/TableTopPlayerState.h"
+
 #include "Public/Utility_BP.h"
 
 

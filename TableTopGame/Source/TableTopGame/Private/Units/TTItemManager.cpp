@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TTItemManager.h"
 #include "TableTopGame.h"
 #include "CoreMinimal.h"
 #include "Public/Units/TTItem.h"
@@ -7,7 +8,7 @@
 #include "Public/Units/ModelCharacter.h"
 #include "Public/Utility_BP.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "TTItemManager.h"
+
 
 
 // Sets default values for this component's properties

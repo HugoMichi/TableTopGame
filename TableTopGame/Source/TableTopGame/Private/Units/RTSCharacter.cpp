@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Public/Units/RTSCharacter.h"
 #include "TableTopGame.h"
 #include "Blueprint/UserWidget.h"
-#include "Public/Units/RTSCharacter.h"
+
 
 
 // Sets default values
@@ -24,8 +25,6 @@ void ARTSCharacter::BeginPlay()
 		UIWidget = CreateWidget<UUserWidget>(GetWorld(), UIWidgetBP);
 
 	}*/
-	
-
 }
 
 // Called every frame
