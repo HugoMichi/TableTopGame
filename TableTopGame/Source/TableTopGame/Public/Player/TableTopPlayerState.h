@@ -43,9 +43,9 @@ class TABLETOPGAME_API ATableTopPlayerState : public APlayerState
 	GENERATED_BODY()
 public:
 	ATableTopPlayerState(const FObjectInitializer& ObjectInitializer);
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable,Category = "Phase")
 	void EndCurrentPhase();
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Player)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Phase")
 	EPlayerPhase CurrentPhase;
 	//TEnumAsByte<EPlayerPhase> CurrentPhase;
 	UPROPERTY(BlueprintAssignable, Category = "Phase")

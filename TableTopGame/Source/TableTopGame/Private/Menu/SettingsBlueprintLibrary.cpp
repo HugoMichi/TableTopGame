@@ -5,6 +5,11 @@
 #include "GameFramework/InputSettings.h"
 #include "GameFramework/GameUserSettings.h"
 #include "EngineUtils.h"
+#include "Runtime/Engine/Classes/Engine/Engine.h"
+#include "Runtime/CoreUObject/Public/UObject/UObjectIterator.h"
+#include "Runtime/Engine/Public/SceneView.h"
+#include "Runtime/Engine/Classes/Engine/LocalPlayer.h"
+#include "RHI.h"
 
 
 
@@ -405,7 +410,7 @@ void USettingsBlueprintLibrary::Selection_SelectionBox(UObject* WorldContextObje
 
 
 	//using a context object to get the world!
-	UWorld* const World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* const World = GEngine->GetWorldFromContextObjectChecked(WorldContextObject);
 	if (!World) return;
 	//~~~~~~~~~~~
 

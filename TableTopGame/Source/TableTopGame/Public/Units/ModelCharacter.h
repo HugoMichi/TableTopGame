@@ -57,12 +57,15 @@ public:
 
 	////** ability system */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities, meta = (AllowPrivateAccess = "true"))
-		class UAbilitySystemComponent* AbilitySystem;
+	class UAbilitySystemComponent* AbilitySystem;
 
-	UAbilitySystemComponent* GetAbilitySystemComponent() const override //We add this function, overriding it from IAbilitySystemInterface.
+	class UAbilitySystemComponent* GetAbilitySystemComponent() const override //We add this function, overriding it from IAbilitySystemInterface.
 	{
 		return AbilitySystem;
 	};
+
+	virtual void PostInitializeComponents() override;
+
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<UGameplayAbility> > AbilitySet;
 	//UGameplayAbilitySet* AbilitySet;
@@ -170,7 +173,7 @@ protected:
 	//*Used for displaying Information of the unit in the ui */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
 	TSubclassOf<UTTCharacterUIWidget> UIWidgetBP;
-
+	UPROPERTY()
 	UTTCharacterUIWidget* UIWidget;
 public:
 	UFUNCTION(BlueprintNativeEvent, Category = "Selection")

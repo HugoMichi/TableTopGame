@@ -16,10 +16,10 @@ class TABLETOPGAME_API UTTMainUIWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	
+	//UTTMainUIWidget(const FObjectInitializer& ObjectInitializer);
 	/*Ref to the CurrentPhase of the Player owning the UI*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)		
-	EPlayerPhase CurrentPhase;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)		
+	//EPlayerPhase CurrentPhase;
 	
 	
 	

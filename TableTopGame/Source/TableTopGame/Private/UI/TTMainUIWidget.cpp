@@ -7,3 +7,8 @@
 
 
 
+/*UTTMainUIWidget::UTTMainUIWidget(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	this->CurrentPhase = EPlayerPhase::PP_DeploymentPhase;;
+}*/

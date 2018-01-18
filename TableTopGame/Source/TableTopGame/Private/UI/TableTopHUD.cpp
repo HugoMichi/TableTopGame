@@ -10,6 +10,8 @@
 #include "Blueprint/UserWidget.h"
 #include "UI/TTMainUIWidget.h"
 
+#include "Public/Player/RTSPlayerController.h"
+
 
 
 ATableTopHUD::ATableTopHUD(const FObjectInitializer& ObjectInitializer) 
@@ -42,18 +44,62 @@ void ATableTopHUD::BeginPlay() {
 void ATableTopHUD::DrawHUD()
 {
 	Super::DrawHUD();
-	if (bDrawSelectionRect) {
-		DrawRect(FLinearColor::Blue,
-			SelectionRect.Min.X, SelectionRect.Min.Y,
-			SelectionRect.GetSize().X, SelectionRect.GetSize().Y);
+
+
+	DrawSelectionFrame();
+	
+	//if (bDrawSelectionRect) {
+	//	/*DrawRect(FLinearColor::Blue,
+	//		SelectionRect.Min.X, SelectionRect.Min.Y,
+	//		SelectionRect.GetSize().X, SelectionRect.GetSize().Y);*/
+	//	if (SelectionRect) {
+	//		DrawRect(SelectionRect);
+	//	}
+	//}
+
+}
+
+void ATableTopHUD::DrawSelectionFrame()
+{
+	// Get selection frame.
+	ARTSPlayerController* PlayerController = Cast<ARTSPlayerController>(PlayerOwner);
+
+	if (!PlayerController)
+	{
+		return;
 	}
 
+	FIntRect SelectionFrame;
+	if (!PlayerController->GetSelectionRect(SelectionFrame))
+	{
+		return;
+	}
+
+	// Draw selection frame.
+	NotifyDrawSelectionFrame(
+		SelectionFrame.Min.X,
+		SelectionFrame.Min.Y,
+		SelectionFrame.Width(),
+		SelectionFrame.Height());
+}
+void ATableTopHUD::NotifyDrawSelectionFrame(float ScreenX, float ScreenY, float Width, float Height)
+{
+	ReceiveDrawSelectionFrame(ScreenX, ScreenY, Width, Height);
+
+}
+void ATableTopHUD::ReceiveDrawSelectionFrame_Implementation(float ScreenX, float ScreenY, float Width, float Height)
+{
+	DrawRect(SelectionRectColor, ScreenX, ScreenY, Width, Height);
+	DrawLine(ScreenX, ScreenY, ScreenX + Width, ScreenY, SelectionRectLineColor);//Bottom Line
+	DrawLine(ScreenX, ScreenY, ScreenX, ScreenY + Height, SelectionRectLineColor);//Left Line
+	DrawLine(ScreenX, ScreenY + Height, ScreenX + Width, ScreenY + Height, SelectionRectLineColor);//Top Line
+	DrawLine(ScreenX + Width, ScreenY, ScreenX + Width, ScreenY + Height, SelectionRectLineColor);//Right Line
 }
 
-void ATableTopHUD::SetSelectionRect(FVector2D startPoint, FVector2D endPoint)
-{
-	SelectionRect = FBox2D(startPoint, endPoint);
-}
+
+
+
+
 
 template<typename T>
 T* ATableTopHUD::openWidget(FString widget_name) {

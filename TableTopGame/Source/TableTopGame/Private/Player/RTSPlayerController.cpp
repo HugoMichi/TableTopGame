@@ -36,8 +36,8 @@ void ARTSPlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
-	InputComponent->BindAction("Select", IE_Pressed, this, &ARTSPlayerController::OnSetSelectedUnderCursorPressed);
-	InputComponent->BindAction("Select", IE_Released, this, &ARTSPlayerController::OnSetSelectedUnderCursorReleased);
+	InputComponent->BindAction("Select", IE_Pressed, this, &ARTSPlayerController::StartSelectionUnderCursor);
+	InputComponent->BindAction("Select", IE_Released, this, &ARTSPlayerController::EndSelectionUnderCursor);
 
 	InputComponent->BindAction("TestPlayerState", EInputEvent::IE_Pressed, this, &ARTSPlayerController::OnTest);
 	/*reference needed !!!!!
@@ -136,70 +136,88 @@ void ARTSPlayerController::OnSetDestinationReleased()
 	bMoveToMouseCursor = false;
 }
 
+
 /*SELECTION FUNCTIONS*/
-AActor* ARTSPlayerController::GetSelectableActorUnderCursor()
-{	// Trace to see what is under the mouse cursor
-	FHitResult Hit;
-	GetHitResultUnderCursor(ECC_Visibility, false, Hit);
-	if (Hit.bBlockingHit)
-	{
-		IStrategySelectionInterface* selectable = Cast<IStrategySelectionInterface>(Hit.GetActor());
-		if (selectable) {
-			selectable->Execute_OnSelectionGained(Hit.GetActor());
-			return Hit.GetActor();
-		}
-	}return NULL;
-}
-void ARTSPlayerController::OnSetSelectedUnderCursorPressed()
+void ARTSPlayerController::StartSelectionUnderCursor()
 {
 	//TODO:: ERROR Handling what happens if 000 is returned ...
 	SelectionBoxStartPoint = GetScreenMousePosition();
-	bBoundingBoxStarted = true;
+	FVector2D MousePos;
+	if(GetScreenMousePosition(MousePos))
+	{
+		SelectionBoxStartPoint = MousePos;
+		bBoundingBoxStarted = true;
+	}
+	
+
 }
 
-void ARTSPlayerController::OnSetSelectedUnderCursorReleased()
+void ARTSPlayerController::EndSelectionUnderCursor()
 {
-	//Cast<ULocalPlayer>(Player)->ViewportClient->Viewport.->SetMouse(mouseLockPositionX, mouseLockPositionY);
-	bool click = bEnableClickEvents;
-	bool over = bEnableMouseOverEvents;
 
-	UE_LOG(LogTemp, Warning, TEXT("StartSelected!!!!! Over:%s Click:%s"), *FString(click ? "True": "False"), *FString(over ? "True": "False"));
-	bBoundingBoxStarted = false;
-	/*setting Selection box to default*/
-	ATableTopHUD* hud = GetHUD();
 	TArray<AActor*> outActors;
-	if (hud) {
-		//TODO:: is Canvas Draw Function !!! should be called only during Hud-DrawHud()!!!!!
-		//MayBe Implement Function in Hud
-		GetActorsInSelectionRectangle(APawn::StaticClass(), hud->SelectionRect.Min, hud->SelectionRect.Max, outActors, false, false);
-		hud->SelectionRect = FBox2D(FVector2D(), FVector2D());
+	if (!GetActorsInSelectionRect(outActors))
+	{
+		bBoundingBoxStarted = false;
+		return;
 	}
+
 	if (!bAddToCurrentSelection) {
 		NotifyAndEmptySelectedObjects();
-		//SelectedObjects.Empty();
 	}
 	for (AActor * actor : outActors) {
+		check(actor);
 		IStrategySelectionInterface* selectable = Cast<IStrategySelectionInterface>(actor);
 		if (selectable) {
 			SelectedObjects.Add(actor);
 			selectable->Execute_OnSelectionGained(actor);
 		}
 	}
-	int selLength = SelectedObjects.Num();
-	FString foo = FString::FromInt(selLength);
-	UE_LOG(LogTemp, Warning, TEXT("Selected!!!!! %d" ), selLength);
-
+	bBoundingBoxStarted = false;
 	OnSelectionChanged.Broadcast();
-	/*for (AActor * actor : SelectedObjects) {
-		//UE_LOG(LogTemp, Warning, TEXT("SelectedName: %s"),*actor->GetName());
-	}*/
 	UE_LOG(LogTemp, Warning, TEXT("EndSelected!!!!!"));
 
-	/*FInputModeGameOnly GameMode;
-	SetInputMode(GameMode);*/
 }
 
-void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActor> ClassFilter, const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<AActor*>& OutActors, bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed)
+bool ARTSPlayerController::GetSelectionRect(FIntRect& OutSelectionRect)
+{
+	if (!bBoundingBoxStarted)
+	{
+		return false;
+	}
+
+	// Get mouse input.
+	FVector2D MousePos;// = FVector2D(EForceInit::ForceInitToZero);
+	if (!GetScreenMousePosition(MousePos))
+	{
+		return false;
+	}
+
+	OutSelectionRect = FIntRect(
+		FIntPoint(SelectionBoxStartPoint.X, SelectionBoxStartPoint.Y),
+		FIntPoint(MousePos.X, MousePos.Y));
+
+	return true;
+}
+bool ARTSPlayerController::GetActorsInSelectionRect(TArray<AActor*>& OutActors)
+{
+	FIntRect OutSelectionRect;
+	if (GetSelectionRect(OutSelectionRect)) {
+		//TODO get a simpler Linetrace to work for small bounding box because its more efficient
+		/*if (OutSelectionRect.Area() < 10)
+		{
+			GetActorsUnderCursor(APawn::StaticClass(), OutActors);
+		}
+		else {*/
+			GetActorsInRectangle(APawn::StaticClass(), OutSelectionRect.Min, OutSelectionRect.Max, OutActors, false, false);
+		//}
+		if (OutActors.Num() > 0) {
+			return true;
+		}
+	}	
+	return false;
+}
+void ARTSPlayerController::GetActorsInRectangle(TSubclassOf<class AActor> ClassFilter, const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<AActor*>& OutActors, bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed)
 {
 	UE_LOG(LogTemp, Warning, TEXT("StartGetActor!!!!"));
 	// Because this is a HUD function it is likely to get called each tick,
@@ -268,6 +286,35 @@ void ARTSPlayerController::GetActorsInSelectionRectangle(TSubclassOf<class AActo
 		}
 	}UE_LOG(LogTemp, Warning, TEXT("EndGetActor!!!!"));
 }
+void ARTSPlayerController::GetActorsUnderCursor(TSubclassOf<class AActor> ClassFilter, TArray<AActor*>& OutActors)
+{//TODO:: Expand with class Filters etc so that an overlapping environment is not blocking the selection 
+	FHitResult Hit;
+	if (GetHitResultUnderCursor(ECC_Visibility, false, Hit)) {
+		if (Hit.bBlockingHit) {
+			OutActors.Add(Hit.GetActor());
+		}
+	}
+}
+void ARTSPlayerController::NotifyAndEmptySelectedObjects()
+{
+	for (AActor * actor : SelectedObjects) 
+	{
+		check(actor);
+		IStrategySelectionInterface* selectable = Cast<IStrategySelectionInterface>(actor);
+		if (selectable)
+			selectable->Execute_OnSelectionLost(actor);
+	}
+	SelectedObjects.Empty();
+}
+
+void ARTSPlayerController::StartAddToCurrentSelection()
+{
+	bAddToCurrentSelection = true;
+}
+void ARTSPlayerController::EndAddToCurrentSelection()
+{
+	bAddToCurrentSelection = false;
+}
 
 void ARTSPlayerController::ImitateAxisValue()
 {
@@ -282,12 +329,12 @@ void ARTSPlayerController::ImitateAxisValue()
 }
 void ARTSPlayerController::OnMouseMove(float axisValue)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! %f"), axisValue));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! %f"), axisValue));
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("OnMouseMove: ! x: %f y: %f"), axisValues.X, axisValues.Y));
 
-	UE_LOG(LogTemp, Warning, TEXT("OnMouseMove: ! %f"), axisValue);
+	//UE_LOG(LogTemp, Warning, TEXT("OnMouseMove: ! %f"), axisValue);
 	//UE_LOG(LogTemp, Warning, TEXT("OnMouseMove: ! x: %f y: %f"), axisValues.X, axisValues.Y);
-	if (bBoundingBoxStarted)
+	/*if (bBoundingBoxStarted)
 	{//
 		FVector2D secondPoint = GetScreenMousePosition();
 		if (SelectionBoxStartPoint != secondPoint) {
@@ -295,16 +342,9 @@ void ARTSPlayerController::OnMouseMove(float axisValue)
 			if (hud)
 				hud->SelectionRect = FBox2D(SelectionBoxStartPoint, secondPoint);
 		}
-	}
+	}*/
 }
-void ARTSPlayerController::NotifyAndEmptySelectedObjects()
-{
-	for (AActor * actor : SelectedObjects) {
-		IStrategySelectionInterface* selectable = Cast<IStrategySelectionInterface>(actor);
-		if (selectable)
-			selectable->Execute_OnSelectionLost(actor);
-	}SelectedObjects.Empty();
-}
+
 
 bool ARTSPlayerController::GetScreenMousePosition(FVector2D& MousePosition)
 {

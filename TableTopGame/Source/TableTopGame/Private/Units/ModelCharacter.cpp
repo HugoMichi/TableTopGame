@@ -8,6 +8,7 @@
 #include "Public/TTGameMode.h"
 #include <EngineGlobals.h>
 #include "Public/Units/TTItem.h"
+#include "Public/Units/TTModelAttributeSet.h"
 #include <Runtime/Engine/Classes/Engine/Engine.h>
 
 
@@ -22,7 +23,7 @@ AModelCharacter::AModelCharacter(const FObjectInitializer& ObjectInitializer)
 
 	// Our ability system component.
 	AbilitySystem = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
-
+	AbilitySystem->SetIsReplicated(true);
 
 	/*Adds Standard W40K Attributes for Testing should be done in Blueprints or Child Class*/
 	const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EAttributes"), true);
@@ -32,10 +33,22 @@ AModelCharacter::AModelCharacter(const FObjectInitializer& ObjectInitializer)
 		EAttributes enumValue = (EAttributes)enumPtr->GetValueByIndex(idx);
 		Attributes.Add(enumValue, FAttribute());
 	}
-
-
-
 }
+
+void AModelCharacter::PostInitializeComponents()
+{
+	
+	Super::PostInitializeComponents();
+	AbilitySystem->InitStats(UTTModelAttributeSet::StaticClass(), NULL);
+
+	/*
+	if (DefaultAbilitySet != NULL)
+	{
+	AbilitySystemComponent->InitializeAbilities(DefaultAbilitySet);
+	}
+	*/
+}
+
 
 // Called when the game starts or when spawned
 void AModelCharacter::BeginPlay()

@@ -98,8 +98,7 @@ protected:
 	UPROPERTY(BlueprintAssignable, Category = Selection)
 	FSelectionChanged OnSelectionChanged;
 
-	void OnSetSelectedUnderCursorPressed();
-	void OnSetSelectedUnderCursorReleased();
+
 
 	/** Input handlers for SetDestination action. */
 	void OnSetDestinationPressed();
@@ -107,31 +106,51 @@ protected:
 	void OnMouseMove(float axisValue);
 
 protected:
+
+
+
 	/*imitate axisValue of MouseInput because its consumed by UI Widgets*/
-	FVector2D LastPosition;
-	FVector2D axisValues;
-	void ImitateAxisValue();
-	/*Selection Properties and function*/
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Selection")
-	TArray<AActor*> SelectedObjects;
-	/*helper function to Empty Array and Notify the Actors of lostSelection */
-	void NotifyAndEmptySelectedObjects();
-	/*if true current Selection is not discardet at a new Selection*/
-	bool bAddToCurrentSelection = false;
-
-	bool bBoundingBoxStarted = false;
-	/*Copy of Hud->GetActorsInSelectionRectangle() to be able to call it outside Hud->DrawHUD()*/
-	void GetActorsInSelectionRectangle(TSubclassOf<class AActor> ClassFilter,
-		const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<AActor*>& OutActors,
-		bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed);
+		FVector2D LastPosition;
+		FVector2D axisValues;
+		void ImitateAxisValue();
 
 
-	/* upper left Corner of the selection Box */
-	FVector2D SelectionBoxStartPoint;
+	//Selection Properties and function
+	void StartSelectionUnderCursor();
+	void EndSelectionUnderCursor();
+		/*if true current Selection is not discardet at a new Selection*/
+		bool bAddToCurrentSelection = false;
+		UFUNCTION(BlueprintCallable)
+		void StartAddToCurrentSelection();
+		UFUNCTION(BlueprintCallable)
+		void EndAddToCurrentSelection();
 
-	AActor* GetSelectableActorUnderCursor();
-	bool GetScreenMousePosition(FVector2D& MousePosition);
-	FVector2D GetScreenMousePosition();
+		UPROPERTY(EditAnywhere, Transient, BlueprintReadOnly, Category = "Selection")
+		TArray<AActor*> SelectedObjects;
+		/*helper function to Empty Array and Notify the Actors of lostSelection */
+		void NotifyAndEmptySelectedObjects();
+
+		/*True then a Selection Box haas been started and will be drawn*/
+		bool bBoundingBoxStarted = false;
+		/* upper left Corner of the selection Box */
+		FVector2D SelectionBoxStartPoint;
+public:
+		/** Gets the current selection frame, in screen space. */
+		bool GetSelectionRect(FIntRect& OutSelectionRect);
+		bool GetActorsInSelectionRect(TArray<AActor*>& OutActors);
+
+	private:
+		/*helper Functions for the Selection */
+		/*Copy of Hud->GetActorsInSelectionRectangle() to be able to call it outside Hud->DrawHUD()*/
+		void GetActorsInRectangle(TSubclassOf<class AActor> ClassFilter,
+			const FVector2D& FirstPoint, const FVector2D& SecondPoint, TArray<AActor*>& OutActors,
+			bool bIncludeNonCollidingComponents, bool bActorMustBeFullyEnclosed);
+		void GetActorsUnderCursor(TSubclassOf<class AActor> ClassFilter, TArray<AActor*>& OutActors);
+		bool GetScreenMousePosition(FVector2D& MousePosition);
+		FVector2D GetScreenMousePosition();
+	//End Selection Properties and Functions
+protected:
+	/*HUD*/
 	ATableTopHUD* GetHUD();
 
 
