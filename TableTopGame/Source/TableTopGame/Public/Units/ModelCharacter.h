@@ -139,7 +139,7 @@ protected:
 	TMap<EAttributes, FAttribute> Attributes;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
-	FAttribute WeoponsSkill;
+	FAttribute WeaponsSkill;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")
 	FAttribute BallisticSkill;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ModelAttributes")

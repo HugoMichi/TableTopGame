@@ -10,7 +10,7 @@
 UENUM(BlueprintType)
 enum class EAttributes : uint8
 {
-	A_WeoponsSkill		UMETA(DisplayName = "WeoponsSkill"),
+	A_WeaponsSkill		UMETA(DisplayName = "WeaponsSkill"),
 	A_BallisticSkill	UMETA(DisplayName = "BallisticSkill"),
 	A_Strength			UMETA(DisplayName = "Strength"),
 	A_Toughness			UMETA(DisplayName = "Toughness"),

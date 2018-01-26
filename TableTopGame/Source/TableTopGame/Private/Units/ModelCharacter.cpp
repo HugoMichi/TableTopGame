@@ -274,8 +274,8 @@ FAttribute& AModelCharacter::GetAttributeOnEnum(EAttributes type)
 {
 	switch (type)
 	{
-	case EAttributes::A_WeoponsSkill:
-		return WeoponsSkill;
+	case EAttributes::A_WeaponsSkill:
+		return WeaponsSkill;
 		break;
 	case EAttributes::A_BallisticSkill:
 		return BallisticSkill;
