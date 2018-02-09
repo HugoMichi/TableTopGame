@@ -61,20 +61,22 @@ void AModelCharacter::BeginPlay()
 		UIWidget->SetCharacter(this);
 	}
 
-	//if (AbilitySystem)
-	//{
-	//	if (HasAuthority())//&& AbilitySet) check not needed because AbilitySet is no Pointer
-	//	{
-	//		for (const Ability& BindInfo : Abilities)
-	//		{
-	//			if (BindInfo.GameplayAbilityClass)
-	//			{
-	//				AbilitySystem->GiveAbility(FGameplayAbilitySpec(BindInfo.GameplayAbilityClass->GetDefaultObject<UGameplayAbility>(), 1, (int32)BindInfo.Command));
-	//			}
-	//		}
-	//		AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1, 0));
-	//	}
-	//	AbilitySystem->InitAbilityActorInfo(this, this);
+	if (AbilitySystem)
+	{
+		if (HasAuthority())//&& AbilitySet) check not needed because AbilitySet is no Pointer
+		{
+			for (auto Ability : AbilitySet)
+			{
+				AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1));
+				/*if (BindInfo.GameplayAbilityClass)
+				{
+					AbilitySystem->GiveAbility(FGameplayAbilitySpec(BindInfo.GameplayAbilityClass->GetDefaultObject<UGameplayAbility>(), 1, (int32)BindInfo.Command));
+				}*/
+			}
+			//AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1));
+		}
+	}
+		AbilitySystem->InitAbilityActorInfo(this, this);
 	
 }
 
@@ -312,4 +314,12 @@ FAttribute& AModelCharacter::GetAttributeOnEnum(EAttributes type)
 UUserWidget*  AModelCharacter::GetUIWidget_Implementation()
 {
 	return UIWidget;
+}
+
+void AModelCharacter::GiveAbility(TSubclassOf<class UGameplayAbility> AbilityGiven, int32 ID, FGameplayAbilitySpecHandle &AbilityHandle)
+{
+	if (HasAuthority() && AbilityGiven)
+	{
+		AbilityHandle = AbilitySystem->GiveAbility(FGameplayAbilitySpec(AbilityGiven.GetDefaultObject(), 1, ID));
+	}
 }

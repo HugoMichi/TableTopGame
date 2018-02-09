@@ -9,6 +9,7 @@
 #include "Public/Units/TTAttribute.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
+#include "Public/Abilities/TTGameplayAbility.h"
 //#include "Public/Units/TTItem.h"
 //#include "UnitsEnums.h"
 //#include "Public/UI/TTCharacterUIWidget.h"
@@ -66,8 +67,8 @@ public:
 
 	virtual void PostInitializeComponents() override;
 
-	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<UGameplayAbility> > AbilitySet;
+	UPROPERTY(EditAnywhere, Category = Abilities )
+	TArray<TSubclassOf<UTTGameplayAbility> > AbilitySet;
 	//UGameplayAbilitySet* AbilitySet;
 
 
@@ -178,4 +179,7 @@ protected:
 public:
 	UFUNCTION(BlueprintNativeEvent, Category = "Selection")
 	UUserWidget*  GetUIWidget();//TODO: Test if this or parent Version is called when used in interface
+
+	UFUNCTION(BlueprintCallable, Category = "Abilities")
+	virtual void GiveAbility(TSubclassOf<class UGameplayAbility> AbilityGiven, int32 ID, FGameplayAbilitySpecHandle &Handle);
 };

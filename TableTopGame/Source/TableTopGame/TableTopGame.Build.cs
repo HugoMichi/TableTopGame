@@ -7,7 +7,7 @@ public class TableTopGame : ModuleRules
 	public TableTopGame(ReadOnlyTargetRules Target) : base(Target)
 	{
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" , "GameplayAbilities" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" , "GameplayAbilities", "GameplayTags" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
