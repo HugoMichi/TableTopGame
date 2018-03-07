@@ -25,7 +25,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Meta = (ExposeOnSpawn = "true"), Category = "Model")
 	AModelCharacter* Character;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	UTTAbilityComponentUIWidget* AbilityComponentUI;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
 	TSubclassOf<UTTAbilityComponentUIWidget> UIAbilityComponentWidgetBP;

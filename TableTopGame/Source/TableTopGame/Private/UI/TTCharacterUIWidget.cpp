@@ -19,6 +19,7 @@ void UTTCharacterUIWidget::SetCharacter(AModelCharacter* ACharacter)
 			if (UIAbilityComponentWidgetBP)
 			{
 				AbilityComponentUI = CreateWidget<UTTAbilityComponentUIWidget>(GetWorld(), UIAbilityComponentWidgetBP);
+				AbilityComponentUI->SetAbilityComponent(AbilityComp);
 				//Set AbilityComponent in UI Component
 			}
 		}
@@ -28,7 +29,7 @@ void UTTCharacterUIWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (this->Character) {
+	/*if (this->Character) {
 		UAbilitySystemComponent* AbilityComp = Cast<IAbilitySystemInterface>(this->Character) ? Cast<IAbilitySystemInterface>(this->Character)->GetAbilitySystemComponent() : nullptr;
 		if (AbilityComp)
 		{
@@ -39,7 +40,7 @@ void UTTCharacterUIWidget::NativeConstruct()
 				//TODO:: in Blueprint Construct add AbilityComponentUI to UMG Elment of this Widget
 			}
 		}
-	}
+	}*/
 	// Character Delegates would be Bound here 
 	//Dont forget to remove them in Destruct()
 	//AMyPlayerController* PC = CAST_TO_MY_PC(GetOwningPlayer());

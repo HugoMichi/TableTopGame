@@ -54,13 +54,6 @@ void AModelCharacter::PostInitializeComponents()
 void AModelCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	if (UIWidgetBP)
-	{
-		//UUserWidget* Widget = UIWidgetBP->GetDefaultObject<UUserWidget>();
-		UIWidget = CreateWidget<UTTCharacterUIWidget>(GetWorld(), UIWidgetBP);
-		UIWidget->SetCharacter(this);
-	}
-
 	if (AbilitySystem)
 	{
 		if (HasAuthority())//&& AbilitySet) check not needed because AbilitySet is no Pointer
@@ -76,7 +69,17 @@ void AModelCharacter::BeginPlay()
 			//AbilitySystem->GiveAbility(FGameplayAbilitySpec(Ability.GetDefaultObject(), 1));
 		}
 	}
-		AbilitySystem->InitAbilityActorInfo(this, this);
+	AbilitySystem->InitAbilityActorInfo(this, this);
+	
+	// UI needs to be set at last because it needs an initialised AbilitySystem etc.
+	if (UIWidgetBP)
+	{
+		//UUserWidget* Widget = UIWidgetBP->GetDefaultObject<UUserWidget>();
+		UIWidget = CreateWidget<UTTCharacterUIWidget>(GetWorld(), UIWidgetBP);
+		UIWidget->SetCharacter(this);
+	}
+
+
 	
 }
 

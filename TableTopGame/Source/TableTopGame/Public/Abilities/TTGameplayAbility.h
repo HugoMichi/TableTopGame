@@ -22,5 +22,5 @@ public:
 	
 	/** Data for the UI representation of this Ability. This should include things like text, icons, etc. Not available in server-only builds. */
 	UPROPERTY(EditDefaultsOnly, Instanced, BlueprintReadOnly, Category = Display)
-	class UGameplayEffectUIData* UIData;
+	class UAbilityUIData* UIData;
 };
